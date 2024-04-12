@@ -1,30 +1,27 @@
-# React + TypeScript + Vite
+# Pandacat
+## Features
+PandaCat is a state of the art gif browser, it has advanced free features like browsing, and exclusive contents like gifs
+![a rock :<](https://tenor.com/view/dance-anime-neco-girls-gif-18041473)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## League of Inters
+We created our company aiming to be the best of the best in emerald, and 'till this day, we're still passionate about our goals. PP
 
-Currently, two official plugins are available:
+Gáspi Matyeszkó:
+	- discord moderator since 2021
+	- hardstuck sliver palyer in league	
+	taiko fan -> kid enjoyer
+	yone botlane dps build main
+	goth humper
+Rábi Benci:
+	catcopium.gif
+	sokkat cappelek
+	at least has 3 pp
+	yuumi mid main
+	hardstuck top 1 challenger in league
+Szilva Kriszti:
+	happy solo support(disappointment)
+	loli enjoyer
+	incest player(Alabama user)
+	Reddit fan
+	Nutella
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list

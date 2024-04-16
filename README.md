@@ -18,7 +18,7 @@ Rábi Benci:
 	at least has 3 pp
 	yuumi mid main
 	hardstuck top 1 challenger in league
-Szilva Kriszti:
+Szilva Kriszti:jewfkh
 	happy solo support(disappointment)
 	loli enjoyer
 	incest player(Alabama user)

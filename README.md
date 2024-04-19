@@ -1,7 +1,7 @@
 # Pandacat
 ## Features
 PandaCat is a state of the art gif browser, it has advanced free features like browsing, and exclusive contents like gifs
-![a rock :<]([https://tenor.com/view/dance-anime-neco-girls-gif-18041473](https://c.tenor.com/iZeiKoevNq0AAAAC/tenor.gif))
+![a rock :<](https://c.tenor.com/iZeiKoevNq0AAAAC/tenor.gif)
 
 ## League of Inters
 We created our company aiming to be the best of the best in emerald, and 'till this day, we're still passionate about our goals. PP

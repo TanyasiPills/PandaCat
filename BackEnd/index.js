@@ -33,14 +33,15 @@ app.get("/favourites", async (req, res) => {
 
 app.post("/favourites", jsonParser, async (req, res) => {
     let body = req.body;
-    if (!body || !body.id) {
+    if (!body || !body.url || !body.tags) {
         res.status(400).send();
         console.warn("favourite/add wrong body");
     } else {
-        if (!data.favourites.includes(body.id)) {
-            data.favourites.push(body.id);
+        let index = data.favourites.findIndex(e => e.url == body.url);
+        if (index == -1) {
+            data.favourites.push({"url": body.url, "tags": body.tags});
             fs.writeFileSync("./data.json", JSON.stringify(data));
-            console.log("favourites/add id:" + body.id);
+            console.log("favourites/add success: " + body.url);
         }
         res.status(204).send();
     }
@@ -48,22 +49,27 @@ app.post("/favourites", jsonParser, async (req, res) => {
 
 app.delete("/favourites", jsonParser, async (req, res) => {
     let body = req.body;
-    if (!body || !body.id) {
+    if (!body || !body.url) {
         res.status(400).send();
         console.warn("favourite/delete wrong body");
     } else {
-        if (data.favourites.includes(body.id)) {
-            data.favourites.splice(data.favourites.indexOf(body.id), 1);
+        let index = data.favourites.findIndex(e => e.url == body.url);
+        if (index != -1) {
+            data.favourites.splice(index, 1);
             fs.writeFileSync("./data.json", JSON.stringify(data));
-            console.log("favourites/delete id:" + body.id);
+            console.log("favourites/delete url:" + body.url);
         }
         res.status(204).send();
     }
 });
 
 app.get("*", async (req, res) => {
-    console.log("no page")
+    console.log("not found: " + req.url);
     res.status(404).send();
 });
 
-app.listen(3000);
+app.listen(3000, () => {
+    if (!data.favourites) data.favourites = [];
+    console.clear();
+    console.log("\nserver started on 3000");
+});

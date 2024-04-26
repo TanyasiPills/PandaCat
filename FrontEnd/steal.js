@@ -30,7 +30,7 @@ async function tenorCallback_categories(responsetext, type)
             case "results":
                 bruh.push(response_objects["next"]);
                 response_objects["results"].forEach(element => {
-                    bruh.push(element.url);
+                    bruh.push([element.url,[element.tags]]);
                 });
                 break;
             case "autofill":
@@ -61,6 +61,6 @@ export async function GetData(){
       var asd = await grab_data("tags");
       console.log(asd+"non");
       asd = await grab_data("results","dog",50,null);
-      console.log(asd+"non");
+      console.log(asd);
     }
 GetData();

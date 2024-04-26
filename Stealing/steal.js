@@ -64,4 +64,4 @@ export async function GetData(){
       console.log(asd);
     }
 GetData();
-//asd
+//asdasd

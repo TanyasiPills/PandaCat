@@ -1,21 +1,26 @@
 import React from "react";
-import "../../node_modules/bootstrap/dist/css/bootstrap.css";
-import { Col, Container, Row } from "react-bootstrap";
+import "../../node_modules/bootstrap/dist/css/bootstrap.css"
+import { Col, Container, Row, Image } from "react-bootstrap";
 import PageHeader from "../Compoments/PageHeader";
 import { motion } from "framer-motion";
+import "./CSS/Contact.css"
 
 export default class Contact extends React.Component {
   render(): React.ReactNode {
     return (
       <>
-        <Container>
+        <Container style={{
+          height: "80vh", display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}>
           <Row>
-            <PageHeader text="Contact" />
+            <PageHeader text="Contact"/>
           </Row>
           <Row>
             <Col>
               <motion.div
-                className="card"
+
                 initial={{
                   opacity: 0,
                   y: -50,
@@ -40,7 +45,9 @@ export default class Contact extends React.Component {
               </motion.div>
             </Col>
             <Col>
-              <img></img>
+              <div className="rightimg">
+                <Image fluid style={{}} src="../public/Tenor_home_page.png" alt="Tenor homepage" />
+              </div>
             </Col>
           </Row>
         </Container>

@@ -1,27 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.css";
 
-export default class TagList extends React.Component<{ taglist: string[] }> {
-  render(): React.ReactNode {
-    return (
-      <div className="btn-group">
-        {this.props.taglist.map((x) => (
-          <div className="btn-group">
-            <input
-              type="checkbox"
-              className="btn-check"
-              id="btn-check"
-              autoComplete="off"
-            />
+interface TagListProps {
+  taglist: string[];
+  removable?: boolean;
+}
+
+const TagList: React.FC<TagListProps> = ({ taglist, removable = true }) => {
+  const [tags, setTags] = useState<string[]>(taglist);
+
+  useEffect(() => {
+    // Update tags when taglist prop changes
+    setTags(taglist);
+  }, [taglist]);
+
+  const removeTag = (index: number) => {
+    setTags((prevTags) => prevTags.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div className="btn-group">
+      {tags.map((x, i) => (
+        <div className="btn-group" key={i}>
+          {removable ? (
+            <>
+              <input
+                type="checkbox"
+                className="btn-check"
+                id={`btn-check-${i}`}
+                autoComplete="off"
+              />
+              <label className="btn btn-default" htmlFor={`btn-check-${i}`}>
+                {x}
+              </label>
+              <button
+                type="button"
+                className="close"
+                aria-label="Close"
+                onClick={() => removeTag(i)}
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </>
+          ) : (
             <label className="btn btn-default" htmlFor="btn-check">
               {x}
             </label>
-            <button type="button" className="close" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        ))}
-      </div>
-    );
-  }
-}
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default TagList;

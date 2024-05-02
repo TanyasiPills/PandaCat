@@ -1,0 +1,7 @@
+.gifs {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin: -20px -10px !important;
+    position: relative;
+}

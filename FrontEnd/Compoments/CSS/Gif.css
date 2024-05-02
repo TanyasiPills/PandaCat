@@ -1,0 +1,9 @@
+.gifcontainer {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.shareicon{
+    max-width: 10%;
+    max-height: 10%;
+}

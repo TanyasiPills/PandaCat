@@ -18,7 +18,7 @@ export default class MyNavbar extends React.Component {
       <>
         <Navbar className="bg-body-tertiary mb-3" fixed="top">
           <Container fluid>
-            <motion.div whileHover={{ scale: [null, 1.5, 1.4] }}
+            <motion.div style={{paddingLeft:"1vw", paddingRight:"1vh"}} whileHover={{ scale: [null, 1.5, 1.4] }}
               transition={{ duration: 0.3 }}>
               <Navbar.Brand href="/" ><Image fluid style={{ maxHeight: "40px" }} src={icon} alt="Icon" /></Navbar.Brand>
             </motion.div>

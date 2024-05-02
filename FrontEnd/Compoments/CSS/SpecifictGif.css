@@ -1,0 +1,46 @@
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.25);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.gifcontainer {
+  max-width: 50%; /* Remove quotes */
+  max-height: 50%; /* Remove quotes */
+  overflow: hidden;
+  position: relative; /* Add position */
+
+}
+
+.heart:hover {
+  animation: heartbeat 1s infinite;
+  transition: opacity 500ms;
+}
+
+.plus-image {
+  position: absolute;
+  max-width: 20%;
+  top: 5%; 
+  right: 5%; 
+}
+
+.gifcontainer {
+  -webkit-filter: brightness(100%);
+}
+
+.gifcontainer:hover {
+  -webkit-filter: brightness(70%);
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all 1s ease;
+}

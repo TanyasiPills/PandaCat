@@ -38,7 +38,7 @@ async function tenorCallback_categories(responsetext, type)
         }
         return bruh;
     }
-async function grab_data(type, search_string = null,limit = null,pos = null)
+export async function grab_data(type, search_string = null,limit = null,pos = null)
     {
         var apikey = "AIzaSyBuIS-XTCTQWJe1xSdwBop5hBvU2zxmbNQ";
         var search = "";
@@ -57,10 +57,11 @@ async function grab_data(type, search_string = null,limit = null,pos = null)
         var nem = await httpGetAsync(search_url,tenorCallback_categories, type);
         return nem;
     }
+    /*
 export async function GetData(){
       var asd = await grab_data("tags");
       console.log(asd+"non");
       asd = await grab_data("results","dog",50,null);
       console.log(asd);
     }
-GetData();
+GetData();*/

@@ -6,8 +6,15 @@ import Testmodule from "../Compoments/Testmodule";
 import ReallyScrewedUpSingleGif from "../Compoments/ReallyScrewedUpSingleGif";
 import WWidht from "../Compoments/WindowWidht"
 import MainPageGifContainer from "../Compoments/MainPageGifContainer"
+//import {grab_data} from "../../Stealing/steal"
 
 export default function Home(predefTagList?:string[]) {
+
+
+  let lekerdezes = fetch("localhost:3000" + "/popular", {
+    method: "GET"
+});
+
   const myRef = useRef<HTMLDivElement>(null);
   const [myElementIsVisible, setMyElementIsVisible] = useState(false);
   const [arrayOfGiffies, setArrayOfGiffies] = useState<string[]>([]);

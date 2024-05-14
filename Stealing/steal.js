@@ -1,3 +1,4 @@
+import e from "express";
 import XMLHttpRequest from "xhr2";
 
 async function httpGetAsync(theUrl, callback, type)
@@ -32,7 +33,13 @@ async function tenorCallback_categories(responsetext, type)
             case "results":
                 bruh.push(response_objects["next"]);
                 response_objects["results"].forEach(element => {
-                    bruh.push([element.url,[element.tags]]);
+                    bruh.push([element.media_formats.gif.url,element.id]);
+                });
+                break;
+            case "popular":
+                bruh.push(response_objects["next"]);
+                response_objects["results"].forEach(element => {
+                    bruh.push([element.url,element.id]);
                 });
                 break;
             case "autofill":
@@ -42,6 +49,7 @@ async function tenorCallback_categories(responsetext, type)
     }
 export async function grab_data(type, search_string = null,limit = null,pos = null)
     {
+        // test stuff: https://tenor.googleapis.com/v2/posts?ids=11586094175715197775&key=AIzaSyBuIS-XTCTQWJe1xSdwBop5hBvU2zxmbNQ
         var apikey = "AIzaSyBuIS-XTCTQWJe1xSdwBop5hBvU2zxmbNQ";
         var search = "";
         switch(type){
@@ -52,8 +60,15 @@ export async function grab_data(type, search_string = null,limit = null,pos = nu
                 search = "search?q=";
                 break;
             case "autofill":
-                search = "autocomplete?q=";
+                search = "autocomplete?q=";;
                 break;
+            case "popular":
+                search = "featured?";
+                break;
+            case "data":
+                search = "posts?ids=";
+                break;
+
         }
         var search_url = "https://tenor.googleapis.com/v2/"+ search + ((search_string != null) ? search_string : "") + "&key=" +apikey+((limit != null) ? "&limit="+limit : "")+((pos != null) ? "&pos="+pos : "");
         var nem = await httpGetAsync(search_url,tenorCallback_categories, type);

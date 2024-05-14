@@ -22,7 +22,8 @@ app.get("/search", jsonParser, async (req, res) => {
 });
 
 app.get("/popular", async (req, res) => {
-
+    var asd = await grab_data("popular");
+    console.log(asd);
 });
 
 app.get("/tags", async (req, res) => {
@@ -30,7 +31,7 @@ app.get("/tags", async (req, res) => {
 });
 
 app.get("/autofill", async (req, res) => {
-    //return autofill list
+    var asd = await grab_data("autofill");
 });
 
 app.get("/gif/:id", async (req, res) => {

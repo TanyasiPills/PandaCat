@@ -3,6 +3,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import data from "./data.json" assert {type: "json"}
 import fs from "fs"
+import {grab_data} from "../Stealing/steal.js";
 
 const app = express();
 const jsonParser = bodyParser.json();
@@ -10,14 +11,26 @@ const jsonParser = bodyParser.json();
 app.use(cors());
 
 app.get("/search", jsonParser, async (req, res) => {
-    //return search result list
     let body = req.body;
-    console.log(body);
-    res.status(200).send(body);
+    if (!body.q) {
+        res.status(400).send();
+        return;
+    }
+    if (!body.limit) body.limit = null;
+    let d = await grab_data("results", body.q, body.limit, body.key);
+    res.status(200).send(d);
+});
+
+app.get("/popular", async (req, res) => {
+
 });
 
 app.get("/tags", async (req, res) => {
     //return list of tags
+});
+
+app.get("/autofill", async (req, res) => {
+    //return autofill list
 });
 
 app.get("/gif/:id", async (req, res) => {
@@ -33,10 +46,12 @@ app.get("/favourites", async (req, res) => {
 
 app.post("/favourites", jsonParser, async (req, res) => {
     let body = req.body;
-    if (!body || !body.url || !body.tags) {
+    if (!body || !body.url) {
         res.status(400).send();
         console.warn("favourite/add wrong body");
+        return;
     } else {
+        if (!body.tags) body.tags = [];
         let index = data.favourites.findIndex(e => e.url == body.url);
         if (index == -1) {
             data.favourites.push({"url": body.url, "tags": body.tags});
@@ -52,6 +67,7 @@ app.delete("/favourites", jsonParser, async (req, res) => {
     if (!body || !body.url) {
         res.status(400).send();
         console.warn("favourite/delete wrong body");
+        return;
     } else {
         let index = data.favourites.findIndex(e => e.url == body.url);
         if (index != -1) {

@@ -23,7 +23,6 @@ async function tenorCallback_categories(responsetext, type)
     {
         var response_objects = JSON.parse(responsetext);
         let bruh = [];
-        console.log(response_objects);
         switch(type){
             case "tags":
                 response_objects["tags"].forEach(element => {

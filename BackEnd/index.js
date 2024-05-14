@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import data from "./data.json" assert {type: "json"}
 import fs from "fs"
 import {grab_data} from "../Stealing/steal.js";
+import e from "express";
 
 const app = express();
 const jsonParser = bodyParser.json();
@@ -12,13 +13,18 @@ app.use(cors());
 
 app.get("/search", jsonParser, async (req, res) => {
     let body = req.body;
-    if (!body.q) {
+    if (!body || !body.q) {
         res.status(400).send();
+        console.warn("search wrong body");
         return;
     }
     if (!body.limit) body.limit = null;
     let d = await grab_data("results", body.q, body.limit, body.key);
-    res.status(200).send(d);
+    let gifs = [];
+    d.slice(1).forEach(e => {
+        gifs.push({id: 123123,url: e[0], tags: e[1][0]}); ///////////////////////////
+    });
+    res.status(200).send({key: d[0], gifs});
 });
 
 app.get("/popular", async (req, res) => {
@@ -27,18 +33,25 @@ app.get("/popular", async (req, res) => {
 });
 
 app.get("/tags", async (req, res) => {
-    //return list of tags
+    let tags = await grab_data("tags");
+    res.status(200).send(tags);
 });
 
 app.get("/autofill", async (req, res) => {
-    var asd = await grab_data("autofill");
+    let body = req.body;
+    if (!body || !body.text) {
+        res.status.send(400).send();
+        console.warn("autofill wrong body");
+        return;
+    }
+    let autofill = await grab_data("autofill", body.text);
+    res.status(200).send(autofill);
 });
 
 app.get("/gif/:id", async (req, res) => {
-    //get specific gif
     let id = req.params.id;
-    console.log("id: " + id);
-    res.status(200).send(id);
+    let gif = await grab_data(); ////////////////////
+    res.status(200).send();
 });
 
 app.get("/favourites", async (req, res) => {
@@ -85,8 +98,8 @@ app.get("*", async (req, res) => {
     res.status(404).send();
 });
 
-app.listen(3000, () => {
+var listener = app.listen(3000, () => {
     if (!data.favourites) data.favourites = [];
     console.clear();
-    console.log("\nserver started on 3000");
+    console.log("\nserver started on " + listener.address().port);
 });

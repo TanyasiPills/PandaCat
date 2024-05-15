@@ -37,10 +37,10 @@ app.get("/tags", async (req, res) => {
     res.status(200).send(tags);
 });
 
-app.get("/autofill", async (req, res) => {
+app.get("/autofill", jsonParser, async (req, res) => {
     let body = req.body;
     if (!body || !body.text) {
-        res.status.send(400).send();
+        res.status(400).send();
         console.warn("autofill wrong body");
         return;
     }
@@ -50,7 +50,7 @@ app.get("/autofill", async (req, res) => {
 
 app.get("/gif/:id", async (req, res) => {
     let id = req.params.id;
-    let gif = await grab_data(); ////////////////////
+    let gif = await grab_data("data",id);
     res.status(200).send();
 });
 

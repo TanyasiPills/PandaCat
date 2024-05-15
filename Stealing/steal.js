@@ -23,6 +23,7 @@ async function tenorCallback_categories(responsetext, type)
     {
         var response_objects = JSON.parse(responsetext);
         let bruh = [];
+        console.log(response_objects);
         switch(type){
             case "tags":
                 response_objects["tags"].forEach(element => {
@@ -38,10 +39,18 @@ async function tenorCallback_categories(responsetext, type)
             case "popular":
                 bruh.push(response_objects["next"]);
                 response_objects["results"].forEach(element => {
-                    bruh.push([element.url,element.id]);
+                    bruh.push([element.media_formats.gif.url,element.id]);
                 });
                 break;
             case "autofill":
+                response_objects["results"].forEach(element => {
+                    bruh.push(element);
+                });
+                break;
+            case "data":
+                let nem = response_objects["results"][0];
+                bruh.push([nem.media_formats.mediumgif.url,nem.tags,nem.content_description]);
+                bruh.forEach(e => console.log(e));
                 break;
         }
         return bruh;

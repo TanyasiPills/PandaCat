@@ -29,7 +29,7 @@ app.get("/search", jsonParser, async (req, res) => {
 
 app.get("/popular", async (req, res) => {
     var asd = await grab_data("popular");
-    console.log(asd);
+    res.status(200).send(asd);
 });
 
 app.get("/tags", async (req, res) => {
@@ -51,7 +51,7 @@ app.get("/autofill", jsonParser, async (req, res) => {
 app.get("/gif/:id", async (req, res) => {
     let id = req.params.id;
     let gif = await grab_data("data",id);
-    res.status(200).send();
+    res.status(200).send(gif);
 });
 
 app.get("/favourites", async (req, res) => {

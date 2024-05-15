@@ -7,7 +7,7 @@ import {grab_data} from "../Stealing/steal.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
-var dir = dirname(fileURLToPath(import.meta.url));
+const dir = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const jsonParser = bodyParser.json();

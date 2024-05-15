@@ -4,6 +4,10 @@ import bodyParser from "body-parser";
 import data from "./data.json" assert {type: "json"}
 import fs from "fs"
 import {grab_data} from "../Stealing/steal.js";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+var dir = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const jsonParser = bodyParser.json();
@@ -21,7 +25,7 @@ app.get("/search", jsonParser, async (req, res) => {
     let d = await grab_data("results", body.q, body.limit, body.key);
     let gifs = [];
     d.slice(1).forEach(e => {
-        gifs.push({url: e[0], id: e[1]}); ///////////////////////////
+        gifs.push({url: e[0], id: e[1]});
     });
     res.status(200).send({key: d[0], gifs});
 });
@@ -74,7 +78,7 @@ app.post("/favourites", jsonParser, async (req, res) => {
         let index = data.favourites.findIndex(e => e.id == body.id);
         if (index == -1) {
             data.favourites.push({url: body.url, id: body.id});
-            fs.writeFileSync("./data.json", JSON.stringify(data));
+            fs.writeFileSync(dir + "/data.json", JSON.stringify(data));
             console.log("favourites/add success: " + body.id);
         }
         res.status(204).send();
@@ -91,7 +95,7 @@ app.delete("/favourites", jsonParser, async (req, res) => {
         let index = data.favourites.findIndex(e => e.id == body.id);
         if (index != -1) {
             data.favourites.splice(index, 1);
-            fs.writeFileSync("./data.json", JSON.stringify(data));
+            fs.writeFileSync(dir + "/data.json", JSON.stringify(data));
             console.log("favourites/delete id:" + body.id);
         }
         res.status(204).send();

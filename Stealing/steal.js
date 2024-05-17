@@ -1,4 +1,3 @@
-import e from "express";
 import XMLHttpRequest from "xhr2";
 
 async function httpGetAsync(theUrl, callback, type) {

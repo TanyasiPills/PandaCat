@@ -7,7 +7,7 @@ import copy from "../../public/copy_link.png";
 import "./CSS/Gif.css";
 import ReallyScrewedUpSingleGif from "../Compoments/ReallyScrewedUpSingleGif";
 
-function Akarmi({ basesrc, favourite }: { basesrc: string; favourite: boolean }) {
+function Akarmi({ basesrc, favourite, bid }: { basesrc: string; favourite: boolean ,bid:string }) {
   const [imgsrc, setImgSrc] = useState(basesrc);
 
   const handleImgSrc = (newImgSrc: string) => {
@@ -19,7 +19,7 @@ function Akarmi({ basesrc, favourite }: { basesrc: string; favourite: boolean })
       <Col>
         <Row><PageHeader text="Gif" /></Row>
         <Row>
-          <ReallyScrewedUpSingleGif imgsrc1={imgsrc} favourite1={favourite}/>
+          <ReallyScrewedUpSingleGif imgsrc1={imgsrc} favourite1={favourite} singleId={bid}/>
         </Row>
         <Row className="sharegif" style={{ display: "flex", justifyContent: "flex-end" }}>
           <ButtonToolbar>

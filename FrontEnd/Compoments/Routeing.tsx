@@ -18,8 +18,9 @@ export default class Routeing extends React.Component {
             <Route path="/favourite" element={<Favourite></Favourite>}></Route>
             <Route
               path="/gif/:id"
-              element={<Specifictgif></Specifictgif>}
+              element={<Specifictgif/>}
             ></Route>
+            <Route path="/favourites" element={<Favourite></Favourite>}></Route>
             <Route path="/*" element={<PageNotFound />}></Route>
           </Route>
         </Routes>

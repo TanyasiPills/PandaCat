@@ -7,6 +7,10 @@ import {grab_data} from "../Stealing/steal.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
+function isFavourite(id) {
+    return data.favourites.some(e => e.id == id);
+}
+
 const dir = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
@@ -25,7 +29,7 @@ app.get("/search", jsonParser, async (req, res) => {
     let d = await grab_data("results", body.q, body.limit, body.key);
     let gifs = [];
     d.slice(1).forEach(e => {
-        gifs.push({url: e[0], id: e[1]});
+        gifs.push({url: e[0], id: e[1], favourite: isFavourite(e[1])});
     });
     res.status(200).send({key: d[0], gifs});
 });
@@ -37,7 +41,7 @@ app.get("/popular", jsonParser, async (req, res) => {
     else raw = await grab_data("popular", null, body.limit);
 
     let popular = {key: raw[0], gifs: []}
-    raw.slice(1).forEach(e => popular.gifs.push({url: e[0], id: e[1]}));
+    raw.slice(1).forEach(e => popular.gifs.push({url: e[0], id: e[1], favourite: isFavourite(e[1])}));
     res.status(200).send(popular);
 });
 
@@ -60,7 +64,7 @@ app.get("/autofill", jsonParser, async (req, res) => {
 app.get("/gif/:id", async (req, res) => {
     let id = req.params.id;
     let raw = await grab_data("data", id);
-    let gif = {url: raw[0][0], tags: raw[0][1], discription: raw[0][2]};
+    let gif = {url: raw[0][0], tags: raw[0][1], discription: raw[0][2], favourite: isFavourite(id)};
     res.status(200).send(gif);
 });
 

@@ -37,9 +37,13 @@ app.get("/search", jsonParser, async (req, res) => {
 app.get("/popular", jsonParser, async (req, res) => {
     let body = req.body;
     let raw;
-    if (!body) raw = await grab_data("popular");
-    else raw = await grab_data("popular", null, body.limit);
-
+    try {
+        if (!body) raw = await grab_data("popular");
+        else raw = await grab_data("popular", null, body.limit, body.key);
+    } catch (e) {
+        res.status(400).send();
+        return;
+    }
     let popular = {key: raw[0], gifs: []}
     raw.slice(1).forEach(e => popular.gifs.push({url: e[0], id: e[1], favourite: isFavourite(e[1])}));
     res.status(200).send(popular);

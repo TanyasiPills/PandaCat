@@ -101,4 +101,8 @@ export async function GetData(){
       asd = await grab_data("results","dog",50,null);
       console.log(asd);
     }
+<<<<<<< HEAD
 GetData();*/
+=======
+GetData();*/
+>>>>>>> c4535d13c16978cd42c0a31b0bc41ffe92977ad0

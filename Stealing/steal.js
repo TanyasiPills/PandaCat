@@ -85,7 +85,7 @@ export async function grab_data(
   var search_url =
     "https://tenor.googleapis.com/v2/" +
     search +
-    (search_string != null ? search_string : "") +
+    (search_string != null ? encodeURIComponent(search_string) : "") +
     "&key=" +
     apikey +
     (limit != null ? "&limit=" + limit : "") +

@@ -25,8 +25,13 @@ app.get("/search", jsonParser, async (req, res) => {
         console.warn("search wrong query");
         return;
     }
-    if (!query.limit) query.limit = null;
-    let d = await grab_data("results", query.q, query.limit, query.key);
+    let d;
+    try {
+        d = await grab_data("results", query.q, query.limit, query.key);
+    } catch(e) {
+        res.status(400).send();
+        return;
+    }
     let gifs = [];
     d.slice(1).forEach(e => {
         gifs.push({url: e[0], id: e[1], favourite: isFavourite(e[1])});

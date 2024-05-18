@@ -19,14 +19,14 @@ const jsonParser = bodyParser.json();
 app.use(cors());
 
 app.get("/search", jsonParser, async (req, res) => {
-    let body = req.body;
-    if (!body || !body.q) {
+    let query = req.query;
+    if (!query || !query.q) {
         res.status(400).send();
-        console.warn("search wrong body");
+        console.warn("search wrong query");
         return;
     }
-    if (!body.limit) body.limit = null;
-    let d = await grab_data("results", body.q, body.limit, body.key);
+    if (!query.limit) query.limit = null;
+    let d = await grab_data("results", query.q, query.limit, query.key);
     let gifs = [];
     d.slice(1).forEach(e => {
         gifs.push({url: e[0], id: e[1], favourite: isFavourite(e[1])});
@@ -35,11 +35,11 @@ app.get("/search", jsonParser, async (req, res) => {
 });
 
 app.get("/popular", jsonParser, async (req, res) => {
-    let body = req.body;
+    let query = req.query;
     let raw;
     try {
-        if (!body) raw = await grab_data("popular");
-        else raw = await grab_data("popular", null, body.limit, body.key);
+        if (!query) raw = await grab_data("popular");
+        else raw = await grab_data("popular", null, query.limit, query.key);
     } catch (e) {
         res.status(400).send();
         return;
@@ -55,13 +55,13 @@ app.get("/tags", async (req, res) => {
 });
 
 app.get("/autofill", jsonParser, async (req, res) => {
-    let body = req.body;
-    if (!body || !body.text) {
+    let query = req.query;
+    if (!query || !query.text) {
         res.status(400).send();
-        console.warn("autofill wrong body");
+        console.warn("autofill wrong query");
         return;
     }
-    let autofill = await grab_data("autofill", body.text);
+    let autofill = await grab_data("autofill", query.text);
     res.status(200).send(autofill);
 });
 

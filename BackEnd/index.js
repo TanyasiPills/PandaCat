@@ -1,14 +1,14 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import data from "./data.json" assert {type: "json"}
-import fs from "fs"
-import {grab_data} from "../Stealing/steal.js";
+import data from "./data.json" assert { type: "json" };
+import fs from "fs";
+import { grab_data } from "../Stealing/steal.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
 function isFavourite(id) {
-    return data.favourites.some(e => e.id == id);
+  return data.favourites.some((e) => e.id == id);
 }
 
 const dir = dirname(fileURLToPath(import.meta.url));
@@ -40,18 +40,22 @@ app.get("/search", jsonParser, async (req, res) => {
 });
 
 app.get("/popular", jsonParser, async (req, res) => {
-    let query = req.query;
-    let raw;
-    try {
-        if (!query) raw = await grab_data("popular");
-        else raw = await grab_data("popular", null, query.limit, query.key);
-    } catch (e) {
-        res.status(400).send();
-        return;
-    }
-    let popular = {key: raw[0], gifs: []}
-    raw.slice(1).forEach(e => popular.gifs.push({url: e[0], id: e[1], favourite: isFavourite(e[1])}));
-    res.status(200).send(popular);
+  let query = req.query;
+  let raw;
+  try {
+    if (!query) raw = await grab_data("popular");
+    else raw = await grab_data("popular", null, query.limit, query.key);
+  } catch (e) {
+    res.status(400).send();
+    return;
+  }
+  let popular = { key: raw[0], gifs: [] };
+  raw
+    .slice(1)
+    .forEach((e) =>
+      popular.gifs.push({ url: e[0], id: e[1], favourite: isFavourite(e[1]) })
+    );
+  res.status(200).send(popular);
 });
 
 app.get("/tags", async (req, res) => {

@@ -1,4 +1,3 @@
-import e from "express";
 import XMLHttpRequest from "xhr2";
 
 async function httpGetAsync(theUrl, callback, type) {
@@ -86,7 +85,7 @@ export async function grab_data(
   var search_url =
     "https://tenor.googleapis.com/v2/" +
     search +
-    (search_string != null ? search_string : "") +
+    (search_string != null ? encodeURIComponent(search_string) : "") +
     "&key=" +
     apikey +
     (limit != null ? "&limit=" + limit : "") +
@@ -101,8 +100,4 @@ export async function GetData(){
       asd = await grab_data("results","dog",50,null);
       console.log(asd);
     }
-<<<<<<< HEAD
 GetData();*/
-=======
-GetData();*/
->>>>>>> c4535d13c16978cd42c0a31b0bc41ffe92977ad0

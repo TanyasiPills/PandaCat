@@ -1,9 +1,61 @@
-.gifcontainer {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+.shareicon {
+  max-width: 10%;
+  max-height: 10%;
 }
-.shareicon{
-    max-width: 10%;
-    max-height: 10%;
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.25);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.gifcontainer {
+  max-width: 50%;
+  max-height: 50%;
+  overflow: hidden;
+  padding: 0px;
+  border: 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative; /* Ensures children are positioned relative to this */
+}
+
+.heart:hover {
+  animation: heartbeat 1s infinite;
+  transition: opacity 500ms;
+}
+
+.plus-image {
+  position: absolute; /* Position absolutely within .gifcontainer */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  max-width: 10%;
+  z-index: 10; /* Higher than the image's z-index */
+}
+
+.gifcontainer img.gifem {
+  display: block;
+  width: 100%;
+}
+
+.gifcontainer {
+  -webkit-filter: brightness(100%);
+}
+
+.gifcontainer:hover {
+  -webkit-filter: brightness(70%);
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all 1s ease;
 }

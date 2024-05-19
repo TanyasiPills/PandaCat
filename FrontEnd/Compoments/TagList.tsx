@@ -4,14 +4,20 @@ import "../../node_modules/bootstrap/dist/css/bootstrap.css";
 interface TagListProps {
   taglist: string[];
   removable?: boolean;
+  callback: Function;
 }
 
-const TagList: React.FC<TagListProps> = ({ taglist, removable = true }) => {
+const TagList: React.FC<TagListProps> = ({
+  taglist,
+  removable = true,
+  callback,
+}) => {
   const [tags, setTags] = useState<string[]>(taglist);
 
   useEffect(() => {
     // Update tags when taglist prop changes
     setTags(taglist);
+    callback(taglist);
   }, [taglist]);
 
   const removeTag = (index: number) => {

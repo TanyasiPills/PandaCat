@@ -1,30 +1,60 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Contact from "../Pages/Contact";
 import Favourite from "../Pages/Favourites";
 import Layout from "../Pages/Layout";
-import Home from "../Pages/Home";
-import Specifictgif from "../Pages/SpecifictGifPage";
 import PageNotFound from "../Pages/PageNotFound";
+import StillLoadingPage from "../Pages/StillLoadingPage";
+import Test from "../Pages/Test";
+// Lazy loading Home component with a delay
+//IN PRODUCTION REMOVE Wait function
+const Home = lazy(() => Wait(3000).then(() => import("../Pages/Home")));
+const Contact = lazy(() => Wait(3000).then(() => import("../Pages/Contact")));
+const SpecifictGifPage = lazy(() =>
+  Wait(3000).then(() => import("../Pages/SpecifictGifPage"))
+);
+export default function Routeing() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route
+            index
+            element={
+              <Suspense fallback={<StillLoadingPage />}>
+                <Home />
+              </Suspense>
+            }
+          ></Route>
+          <Route
+            path="/contact"
+            element={
+              <Suspense fallback={<StillLoadingPage />}>
+                <Contact />
+              </Suspense>
+            }
+          ></Route>
+          <Route path="/favourite" element={<Favourite />}></Route>
+          <Route
+            path="/gif/:id"
+            element={
+              <Suspense fallback={<StillLoadingPage />}>
+                <SpecifictGifPage/>
+              </Suspense>
+            }
+          ></Route>
+          <Route path="/favourites" element={<Favourite />}></Route>
+          <Route path="/*" element={<PageNotFound />}></Route>
+          <Route path="/test" element={<Test />}></Route>
+          {/*<Route path="/StillLoading" element={<StillLoadingPage />}></Route>*/}
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
 
-export default class Routeing extends React.Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home/>}></Route>
-            <Route path="/contact" element={<Contact></Contact>}></Route>
-            <Route path="/favourite" element={<Favourite></Favourite>}></Route>
-            <Route
-              path="/gif/:id"
-              element={<Specifictgif/>}
-            ></Route>
-            <Route path="/favourites" element={<Favourite></Favourite>}></Route>
-            <Route path="/*" element={<PageNotFound />}></Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    );
-  }
+// Utility function to wait for a specified time for testing
+function Wait(time) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, time);
+  });
 }

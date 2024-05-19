@@ -14,16 +14,19 @@ import heart from "../../public/heart-regular.svg";
 import solidheart from "../../public/heart-solid.svg";
 import "./CSS/Gif.css";
 import { json } from "react-router-dom";
-export default function ReallyScrewedUpSingleGif(
-  {imgsrc1,
-  singleId,
-  favourite1}: {imgsrc1: any,singleId: any, favourite1: any}
-) {
-  const [IsItFav, setItFav] = useState(favourite1);
 
-  const tags = fetch("localhost:3000" + "/" + imgsrc1, {
-    method: "GET",
-  });
+interface Props {
+  imgsrc1: string;
+  singleId: string;
+  favourite1: boolean;
+}
+
+export default function ReallyScrewedUpSingleGif({
+  imgsrc1,
+  singleId,
+  favourite1,
+}: Props) {
+  const [IsItFav, setItFav] = useState(favourite1);
 
   return (
     <div className="gifcontainer card ">
@@ -34,17 +37,18 @@ export default function ReallyScrewedUpSingleGif(
             setItFav(() => (IsItFav ? false : true));
             {
               if (!IsItFav) {
-                fetch("localhost:3000" + "/favourites", {
+                fetch("http://localhost:3000" + "/favourites", {
                   method: "POST",
                   body: JSON.stringify({
                     url: imgsrc1,
+                    id: singleId,
                   }),
                 });
               } else {
-                fetch("localhost:3000" + "/favourites", {
+                fetch("http://localhost:3000" + "/favourites", {
                   method: "DELETE",
                   body: JSON.stringify({
-                    url: imgsrc1,
+                    id: singleId,
                   }),
                 });
               }
@@ -61,18 +65,18 @@ export default function ReallyScrewedUpSingleGif(
             setItFav(() => (IsItFav ? false : true));
             {
               if (!IsItFav) {
-                fetch("localhost:3000" + "/favourites", {
+                fetch("http://localhost:3000" + "/favourites", {
                   method: "POST",
                   body: JSON.stringify({
                     url: imgsrc1,
-                    tags: tags,
+                    id: singleId,
                   }),
                 });
               } else {
-                fetch("localhost:3000" + "/favourites", {
+                fetch("http://localhost:3000" + "/favourites", {
                   method: "DELETE",
                   body: JSON.stringify({
-                    url: imgsrc1,
+                    id: singleId,
                   }),
                 });
               }

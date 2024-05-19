@@ -1,7 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import { Outlet, useLocation } from "react-router-dom";
-import PageHeader from "../Compoments/PageHeader";
 import MyNavbar from "../Compoments/MyNavbar";
 
 export default function Layout() {
@@ -10,8 +9,7 @@ export default function Layout() {
     useLocation().pathname.replace("/", "").slice(1);
   return (
     <Container>
-      <MyNavbar/>
-      
+      <MyNavbar />
       <Outlet />
     </Container>
   );

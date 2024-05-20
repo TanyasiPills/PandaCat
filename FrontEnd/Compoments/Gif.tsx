@@ -14,15 +14,20 @@ import copy from "../../public/copy_link.png";
 import "./CSS/Gif.css";
 import ReallyScrewedUpSingleGif from "../Compoments/ReallyScrewedUpSingleGif";
 
+interface Props {
+  basesrc: string;
+  favourite: boolean;
+  bid: string;
+}
+
+
 function Akarmi({
   basesrc,
   favourite,
   bid,
-}: {
-  basesrc: string;
-  favourite: boolean;
-  bid: string;
-}) {
+}: 
+  Props
+) {
   const [imgsrc, setImgSrc] = useState(basesrc);
   console.log("Gif.tsx|"+bid);
   const handleImgSrc = async (paramImg: string) => {
@@ -32,15 +37,6 @@ function Akarmi({
     })
       .then((x) => x.json())
       .then((x) => (newImgSrc = x.url));
-  /*
-  const handleImgSrc = async (paramImg: string) => {
-    const newImgSrc = await fetch(`http://localhost:3000/gif/${bid}`, {
-      method: "POST",
-      body: JSON.stringlify(
-        size: paramImg
-      )
-    });
-*/
     setImgSrc(newImgSrc);
   };
 
@@ -59,7 +55,7 @@ function Akarmi({
         </Row>
         <Row
           className="sharegif"
-          style={{ display: "flex", justifyContent: "flex-end" }}
+          style={{ display: "flex", justifyContent: "flex-end" , paddingTop:"2vh"}}
         >
           <ButtonToolbar>
             <ToggleButtonGroup type="radio" name="options" defaultValue={1}>

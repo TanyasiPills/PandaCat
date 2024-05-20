@@ -4,6 +4,7 @@ import { Container } from "react-bootstrap";
 import { Navigate, useNavigate } from "react-router-dom";
 import Gif from "../Compoments/Gif";
 import TagList from "../Compoments/TagList";
+import "../Pages/CSS/SpecifictGifPage.css";
 
 interface SpecificGifProps {
   gifsrc?: string;
@@ -96,17 +97,20 @@ export default function SpecificGif({
   }
 
   return (
-    <Container>
+    <Container style={{backgroundColor:	"rgb(224,224,224)", paddingTop: "2vh", paddingBottom: "2vh"}}>
+      <div style={{paddingLeft:"15vw", paddingRight: "15vw", paddingBottom: "2vh"}}>
       <Gif
         basesrc={gifData.url || ""}
         favourite={gifData.favourite || false}
         bid={gifData.id || ""}
       />
+         
       <TagList
         taglist={gifData.tags || []}
         removable={false}
         callback={() => {}}
       />
+      </div>
     </Container>
   );
 }

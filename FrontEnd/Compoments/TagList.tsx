@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.css";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
+import "./CSS/TagList.css"
 
 interface TagListProps {
   taglist: string[];
@@ -45,6 +46,7 @@ const TagList: React.FC<TagListProps> = ({
                 {x}
               </label>
               <button
+              style={{display: "inline-block"}}
                 type="button"
                 className="close"
                 aria-label="Close"
@@ -54,8 +56,8 @@ const TagList: React.FC<TagListProps> = ({
               </button>
             </>
           ) : (
-            <label
-              className="btn btn-default"
+            <label style={{display: "inline-block"}}
+              className="btn btn-default coloredtags"
               onClick={() => navigate("/",{state:{clickedString: x}})}
             >
               {x}

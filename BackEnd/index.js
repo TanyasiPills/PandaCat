@@ -76,13 +76,27 @@ app.get("/autofill", jsonParser, async (req, res) => {
 
 app.get("/gif/:id", async (req, res) => {
   let id = req.params.id;
+  let query = req.query;
+  let size;
   let raw = await grab_data("data", id);
+  if (query || query.size) size = query.size;
   let gif = {
-    url: raw[0][0],
     tags: raw[0][1],
     discription: raw[0][2],
     favourite: isFavourite(id),
   };
+
+  switch (size) {
+    case "1":
+      gif.url = raw[0][0][0];
+      break;
+    case "3":
+      gif.url = raw[0][0][2];
+      break;
+    default:
+      gif.url = raw[0][0][1];
+      break;
+  }
   res.status(200).send(gif);
 });
 

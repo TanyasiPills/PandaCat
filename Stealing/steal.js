@@ -47,7 +47,11 @@ async function tenorCallback_categories(responsetext, type) {
     case "data":
       let nem = response_objects["results"][0];
       bruh.push([
-        nem.media_formats.mediumgif.url,
+        [
+          nem.media_formats.gif.url,
+          nem.media_formats.mediumgif.url,
+          nem.media_formats.tinygif.url
+        ],
         nem.tags,
         nem.content_description,
       ]);

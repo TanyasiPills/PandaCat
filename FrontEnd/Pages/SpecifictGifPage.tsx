@@ -43,6 +43,7 @@ async function fetchGifData(param: string | undefined, isGid: boolean): Promise<
     if (!data) {
       return null;
     }
+    data.id = param;
 
     return data;
   } catch (error) {

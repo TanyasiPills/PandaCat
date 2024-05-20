@@ -83,9 +83,6 @@ export default function GifContainer({ taglist }: { taglist?: string[] }) {
 	  }, [taglist, startTransition]);
 	*/
 
-	console.log("sdféklgjklsgdfm");
-	console.log(giflist.length);
-	console.log(lst.map(e => e.length).reduce((a, b) => a + b, 0));
 	if (giflist.length != lst.map(e => e.length).reduce((a, b) => a + b, 0)) {
 		let columns = 4;
 
@@ -118,9 +115,6 @@ export default function GifContainer({ taglist }: { taglist?: string[] }) {
 			index++;
 			prioIndex++;
 		}
-
-		console.log(lst.map(e => e.length));
-		console.log(prio.map(e => e[1]));
 	}
 
 	return (

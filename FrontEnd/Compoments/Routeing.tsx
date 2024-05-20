@@ -4,12 +4,11 @@ import Favourite from "../Pages/Favourites";
 import Layout from "../Pages/Layout";
 import PageNotFound from "../Pages/PageNotFound";
 import StillLoadingPage from "../Pages/StillLoadingPage";
-import Test from "../Pages/Test";
 // Lazy loading Home component with a delay
 //IN PRODUCTION REMOVE Wait function
-const Home = lazy(() => Wait(3000).then(() => import("../Pages/Home")));
-const Contact = lazy(() => Wait(3000).then(() => import("../Pages/Contact")));
-const SpecifictGifPage = lazy(() => Wait(3000).then(() => import("../Pages/SpecifictGifPage")));
+const Home = lazy(() => import("../Pages/Home"));
+const Contact = lazy(() => import("../Pages/Contact"));
+const SpecifictGifPage = lazy(() => import("../Pages/SpecifictGifPage"));
 
 export default function Routeing() {
   return (
@@ -43,7 +42,6 @@ export default function Routeing() {
           ></Route>
           <Route path="/favourites" element={<Favourite />}></Route>
           <Route path="/*" element={<PageNotFound/>}></Route>
-          <Route path="/test" element={<Test />}></Route>
           {/*<Route path="/StillLoading" element={<StillLoadingPage />}></Route>*/}
         </Route>
       </Routes>

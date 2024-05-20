@@ -79,6 +79,7 @@ app.get("/gif/:id", async (req, res) => {
   let query = req.query;
   let size;
   let raw = await grab_data("data", id);
+  if (!raw) res.status(400).send();
   if (query || query.size) size = query.size;
   let gif = {
     tags: raw[0][1],

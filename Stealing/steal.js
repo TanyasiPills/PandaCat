@@ -46,15 +46,19 @@ async function tenorCallback_categories(responsetext, type) {
       break;
     case "data":
       let nem = response_objects["results"][0];
-      bruh.push([
-        [
-          nem.media_formats.gif.url,
-          nem.media_formats.mediumgif.url,
-          nem.media_formats.tinygif.url
-        ],
-        nem.tags,
-        nem.content_description,
-      ]);
+      try {
+        bruh.push([
+          [
+            nem.media_formats.gif.url,
+            nem.media_formats.mediumgif.url,
+            nem.media_formats.tinygif.url
+          ],
+          nem.tags,
+          nem.content_description,
+        ]);
+      } catch (e) {
+        return null;
+      }
       //bruh.forEach(e => console.log(e));
       break;
   }

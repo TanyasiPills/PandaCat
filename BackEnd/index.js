@@ -110,6 +110,7 @@ app.get("/favourites", async (req, res) => {
 
 app.post("/favourites", jsonParser, async (req, res) => {
   let body = req.body;
+  console.log(body);
   if (!body || !body.url || !body.id) {
     res.status(400).send();
     console.warn("favourite/add wrong body");

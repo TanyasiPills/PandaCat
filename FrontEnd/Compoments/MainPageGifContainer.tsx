@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import ReallyScrewedUpSingleGif from "./ReallyScrewedUpSingleGif";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
-import { Navigate, useNavigate } from "react-router-dom";
 
 interface Gif {
   url: string;
@@ -21,7 +20,6 @@ export default function GifContainer({ taglist }: { taglist?: string[] }) {
   const [myElementIsVisible, setMyElementIsVisible] = useState(false);
   const [giflist, setGiflist] = useState<Gif[]>([]);
   const [myKey, setMyKey] = useState<string | undefined>(undefined);
-  const navigate = useNavigate();
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       const entry = entries[0];
@@ -55,17 +53,19 @@ export default function GifContainer({ taglist }: { taglist?: string[] }) {
       if (myKey) params["key"] = myKey;
       if (searchstr) params["q"] = searchstr.join(",");
 
-      console.log(params.key)
+      console.log(params.key+ myKey)
       const response = await fetch(url + "?" + new URLSearchParams(params));
       const data = await response.json();
 
       setGiflist((prevList) => [...prevList, ...data.gifs]);
-      setMyKey(data.key);
+      console.log(data.key+"||data.key");
+      setMyKey((myKey)=> (data.key));
+      console.log(myKey);
     } catch (error) {
       console.error("Error fetching gifs:", error);
     }
   };
-
+/*
   useEffect(() => {
     setGiflist([]); // Clear giflist when taglist changes
     setMyKey(undefined); // Reset key when taglist changes
@@ -78,7 +78,7 @@ export default function GifContainer({ taglist }: { taglist?: string[] }) {
       );
     });
   }, [taglist, startTransition]);
-
+*/
   return (
     <Container>
       <Suspense fallback={<Spinner />}>

@@ -32,16 +32,18 @@ export default function ReallyScrewedUpSingleGif({
             setItFav(() => (IsItFav ? false : true));
             {
               if (!IsItFav) {
-                fetch("http://localhost:3000" + "/favourite", {
+                fetch("http://localhost:3000" + "/favourites", {
                   method: "POST",
+                  headers: {"Content-Type":"application/json"},
                   body: JSON.stringify({
                     url: imgsrc1,
                     id: singleId,
                   }),
                 });
               } else {
-                fetch("http://localhost:3000" + "/favourite", {
+                fetch("http://localhost:3000" + "/favourites", {
                   method: "DELETE",
+                  headers: {"Content-Type":"application/json"},
                   body: JSON.stringify({
                     id: singleId,
                   }),
@@ -60,16 +62,18 @@ export default function ReallyScrewedUpSingleGif({
             setItFav(() => (IsItFav ? false : true));
             {
               if (!IsItFav) {
-                fetch("http://localhost:3000" + "/favourite", {
+                fetch("http://localhost:3000" + "/favourites", {
                   method: "POST",
+                  headers: {"Content-Type":"application/json"},
                   body: JSON.stringify({
                     url: imgsrc1,
                     id: singleId,
                   }),
                 });
               } else {
-                fetch("http://localhost:3000" + "/favourite", {
+                fetch("http://localhost:3000" + "/favourites", {
                   method: "DELETE",
+                  headers: {"Content-Type":"application/json"},
                   body: JSON.stringify({
                     id: singleId,
                   }),

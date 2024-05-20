@@ -9,9 +9,8 @@ import Test from "../Pages/Test";
 //IN PRODUCTION REMOVE Wait function
 const Home = lazy(() => Wait(3000).then(() => import("../Pages/Home")));
 const Contact = lazy(() => Wait(3000).then(() => import("../Pages/Contact")));
-const SpecifictGifPage = lazy(() =>
-  Wait(3000).then(() => import("../Pages/SpecifictGifPage"))
-);
+const SpecifictGifPage = lazy(() => Wait(3000).then(() => import("../Pages/SpecifictGifPage")));
+
 export default function Routeing() {
   return (
     <BrowserRouter>
@@ -43,7 +42,7 @@ export default function Routeing() {
             }
           ></Route>
           <Route path="/favourites" element={<Favourite />}></Route>
-          <Route path="/*" element={<PageNotFound />}></Route>
+          <Route path="/*" element={<PageNotFound/>}></Route>
           <Route path="/test" element={<Test />}></Route>
           {/*<Route path="/StillLoading" element={<StillLoadingPage />}></Route>*/}
         </Route>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.css";
 import { Container } from "react-bootstrap";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Gif from "../Compoments/Gif";
 import TagList from "../Compoments/TagList";
 
@@ -55,11 +55,13 @@ export default function SpecificGif({
   gid: initialGid,
   giffavourite: initialGiffavourite,
   giftaglist: initialGiftaglist,
-}: SpecificGifProps) {
+}: SpecificGifProps)
+: React.ReactNode {
   const [gifData, setGifData] = useState<GifData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -89,7 +91,8 @@ export default function SpecificGif({
   }
 
   if (error || !gifData) {
-    return <Navigate to="/*" />;
+    navigate("/*",{state:{error: "404"}});
+    return;
   }
 
   return (

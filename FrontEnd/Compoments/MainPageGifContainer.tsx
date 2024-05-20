@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import ReallyScrewedUpSingleGif from "./ReallyScrewedUpSingleGif";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
+import { UNSAFE_DataRouterContext } from "react-router-dom";
 
 interface Gif {
   url: string;
@@ -19,7 +20,7 @@ export default function GifContainer({ taglist }: { taglist?: string[] }) {
   const myRef = useRef<HTMLDivElement>(null);
   const [myElementIsVisible, setMyElementIsVisible] = useState(false);
   const [giflist, setGiflist] = useState<Gif[]>([]);
-  const [myKey, setMyKey] = useState<string | undefined>(undefined);
+  var myKey : string | undefined = undefined;
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       const entry = entries[0];
@@ -59,8 +60,8 @@ export default function GifContainer({ taglist }: { taglist?: string[] }) {
 
       setGiflist((prevList) => [...prevList, ...data.gifs]);
       console.log(data.key+"||data.key");
-      setMyKey((myKey)=> (data.key));
-      console.log(myKey);
+      myKey = data.key;
+      console.log("myKey: " + myKey);
     } catch (error) {
       console.error("Error fetching gifs:", error);
     }

@@ -34,8 +34,7 @@ export default function Home({ predefTagList }: Props) {
   return (
     <Container>
       <MyNavbar onSearch={MySearch} />
-      <div className="head" style={{ backgroundColor: "red", height: "30vh" }}></div>
-      <div className="ActiveTags" style={{ backgroundColor: "blue", height: "5vh" }}>
+      <div className="ActiveTags" style={{ backgroundColor: "#aaa", height: "5vh" }}>
         {gtaglist.length > 0 && <TagList taglist={gtaglist} removable={true} callback={thisFromChildComponent} />}
       </div>
       <Testmodule />

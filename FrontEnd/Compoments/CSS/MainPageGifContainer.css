@@ -1,0 +1,28 @@
+.gifrow {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.gifcolumn {
+    flex: 25%;
+    padding: 0 4px;
+    height: min-content;
+}
+
+.gifcolumn .card {
+    vertical-align: middle;
+    margin-top: 8px;
+}
+
+
+@media only screen and (max-width: 1280px) {
+    .gifcolumn {
+        flex: 50%
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .gifcolumn {
+        flex: 100%
+    }
+}

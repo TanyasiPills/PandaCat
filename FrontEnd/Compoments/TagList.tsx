@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.css";
+import { Navigate, useNavigate } from "react-router-dom";
 
 interface TagListProps {
   taglist: string[];
   removable?: boolean;
-  callback: Function;
+  callback: (tags: string[]) => void;
 }
 
 const TagList: React.FC<TagListProps> = ({
@@ -13,17 +14,21 @@ const TagList: React.FC<TagListProps> = ({
   callback,
 }) => {
   const [tags, setTags] = useState<string[]>(taglist);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Update tags when taglist prop changes
     setTags(taglist);
     callback(taglist);
-  }, [taglist]);
+  }, [taglist, callback]);
 
   const removeTag = (index: number) => {
-    setTags((prevTags) => prevTags.filter((_, i) => i !== index));
+    const updatedTags = tags.filter((_, i) => i !== index);
+    setTags(updatedTags);
+    callback(updatedTags); // Call the callback with updated tags
   };
 
+  
   return (
     <div className="btn-group">
       {tags.map((x, i) => (
@@ -49,7 +54,10 @@ const TagList: React.FC<TagListProps> = ({
               </button>
             </>
           ) : (
-            <label className="btn btn-default" htmlFor="btn-check">
+            <label
+              className="btn btn-default"
+              onClick={() => navigate("/",{state:{clickedString: x}})}
+            >
               {x}
             </label>
           )}

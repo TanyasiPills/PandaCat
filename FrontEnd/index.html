@@ -1,15 +1,38 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-    <script type="module" src="../Stealing/steal.js"></script>
-  </head>
-  <body>
-    <div id="root">
-      <p id="nem"></p>
-    </div>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PandaCat</title>
+
+
+
+  <script src="three.r134.min.js"></script>
+  <script src="../public/vanta.fog.min.js"></script>
+  <script>
+    VANTA.FOG({
+      el: "#body",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      highlightColor: 0xd9b74b,
+      midtoneColor: 0xaf6056,
+      lowlightColor: 0x7f69de,
+      baseColor: 0xe89e9e,
+      blurFactor: 0.33,
+      speed: 0.90,
+      zoom: 0.80
+    })
+  </script>
+</head>
+
+<body id="body">
+  <div id="root">
+  </div>
+</body>
+
 </html>

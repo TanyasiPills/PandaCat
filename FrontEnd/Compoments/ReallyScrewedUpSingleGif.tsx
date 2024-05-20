@@ -1,19 +1,13 @@
 import React, { useState } from "react";
 import {
-  ButtonToolbar,
-  Col,
-  Container,
-  Form,
-  Image,
-  Row,
-  ToggleButton,
-  ToggleButtonGroup,
+  Image
 } from "react-bootstrap";
-import PageHeader from "./PageHeader";
 import heart from "../../public/heart-regular.svg";
 import solidheart from "../../public/heart-solid.svg";
 import "./CSS/Gif.css";
-import { json } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+
 
 interface Props {
   imgsrc1: string;
@@ -28,16 +22,17 @@ export default function ReallyScrewedUpSingleGif({
 }: Props) {
   const [IsItFav, setItFav] = useState(favourite1);
 
+  const navigator = useNavigate();
   return (
     <div className="gifcontainer card ">
-      <Image fluid className="gifem" src={imgsrc1} alt="Can't load the gif" />
+      <Image fluid className="gifem" src={imgsrc1} alt="Can't load the gif"  onClick={() => navigator(`/gif/${singleId}`)}/>
       {favourite1 ? (
         <Image
           onClick={() => {
             setItFav(() => (IsItFav ? false : true));
             {
               if (!IsItFav) {
-                fetch("http://localhost:3000" + "/favourites", {
+                fetch("http://localhost:3000" + "/favourite", {
                   method: "POST",
                   body: JSON.stringify({
                     url: imgsrc1,
@@ -45,7 +40,7 @@ export default function ReallyScrewedUpSingleGif({
                   }),
                 });
               } else {
-                fetch("http://localhost:3000" + "/favourites", {
+                fetch("http://localhost:3000" + "/favourite", {
                   method: "DELETE",
                   body: JSON.stringify({
                     id: singleId,
@@ -65,7 +60,7 @@ export default function ReallyScrewedUpSingleGif({
             setItFav(() => (IsItFav ? false : true));
             {
               if (!IsItFav) {
-                fetch("http://localhost:3000" + "/favourites", {
+                fetch("http://localhost:3000" + "/favourite", {
                   method: "POST",
                   body: JSON.stringify({
                     url: imgsrc1,
@@ -73,7 +68,7 @@ export default function ReallyScrewedUpSingleGif({
                   }),
                 });
               } else {
-                fetch("http://localhost:3000" + "/favourites", {
+                fetch("http://localhost:3000" + "/favourite", {
                   method: "DELETE",
                   body: JSON.stringify({
                     id: singleId,

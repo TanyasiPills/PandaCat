@@ -19,10 +19,7 @@ interface GifData {
   tags?: string[];
 }
 
-async function fetchGifData(
-  param: string | undefined,
-  isGid: boolean
-): Promise<GifData | null> {
+async function fetchGifData(param: string | undefined, isGid: boolean): Promise<GifData | null> {
   try {
     let response;
     if (isGid) {
@@ -38,10 +35,14 @@ async function fetchGifData(
     }
 
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      return null;
     }
 
     const data: GifData = await response.json();
+    if (!data) {
+      return null;
+    }
+
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -57,6 +58,7 @@ export default function SpecificGif({
 }: SpecificGifProps) {
   const [gifData, setGifData] = useState<GifData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,10 +76,11 @@ export default function SpecificGif({
 
       if (data) {
         setGifData(data);
-        console.log(gifData); //it is null please tell me why
-        setLoading(false);
+      } else {
+        setError(true);
       }
-    };  
+      setLoading(false);
+    };
     fetchData();
   }, [initialGifsrc, initialGid]);
 
@@ -85,10 +88,10 @@ export default function SpecificGif({
     return <div>Loading...</div>;
   }
 
-  if (!gifData) {
+  if (error || !gifData) {
     return <Navigate to="/*" />;
   }
-  console.log("specifict.tsx1|" + gifData.id);
+
   return (
     <Container>
       <Gif

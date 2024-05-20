@@ -10,8 +10,6 @@ import {
   ToggleButtonGroup,
 } from "react-bootstrap";
 import PageHeader from "./PageHeader";
-import heart from "../../public/heart-regular.svg";
-import solidheart from "../../public/heart-solid.svg";
 import copy from "../../public/copy_link.png";
 import "./CSS/Gif.css";
 import ReallyScrewedUpSingleGif from "../Compoments/ReallyScrewedUpSingleGif";
@@ -29,12 +27,12 @@ function Akarmi({
   console.log("Gif.tsx|"+bid);
   const handleImgSrc = async (paramImg: string) => {
     var newImgSrc;
-    await fetch(`http://localhost:3000/gif/${bid}`, {
+    await fetch(`http://localhost:3000/gif/${bid}?`+new URLSearchParams(paramImg), {
       method: "GET",
     })
       .then((x) => x.json())
       .then((x) => (newImgSrc = x.url));
-    /*
+  /*
   const handleImgSrc = async (paramImg: string) => {
     const newImgSrc = await fetch(`http://localhost:3000/gif/${bid}`, {
       method: "POST",
@@ -68,21 +66,23 @@ function Akarmi({
               <ToggleButton
                 value={1}
                 id={"hd"}
-                onChange={() => handleImgSrc("hd")}
+                onChange={() => handleImgSrc("1")}
+                checked={false}
               >
                 HD Gif
               </ToggleButton>
               <ToggleButton
                 value={2}
                 id={"sd"}
-                onChange={() => handleImgSrc("sd")}
+                onChange={() => handleImgSrc("2")}
+                checked 
               >
                 SD Gif 2
               </ToggleButton>
               <ToggleButton
                 value={3}
                 id={"mp"}
-                onChange={() => handleImgSrc("mp")}
+                onChange={() => handleImgSrc("3")}
               >
                 MP4
               </ToggleButton>

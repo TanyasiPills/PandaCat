@@ -6,27 +6,27 @@ import React, {
   Suspense,
 } from "react";
 import ReallyScrewedUpSingleGif from "./ReallyScrewedUpSingleGif";
-import WWidht from "../Compoments/WindowWidht";
-import { Container, Spinner } from "react-bootstrap";
+import { Col, Container, Row, Spinner } from "react-bootstrap";
+import { Navigate, useNavigate } from "react-router-dom";
+
+interface Gif {
+  url: string;
+  id: string;
+  favourite: boolean;
+}
 
 export default function GifContainer({ taglist }: { taglist?: string[] }) {
   const [isPending, startTransition] = useTransition();
-
   const myRef = useRef<HTMLDivElement>(null);
   const [myElementIsVisible, setMyElementIsVisible] = useState(false);
-  const [giflist, setGiflist] = useState<
-    { url: string; id: string; favourite: boolean }[]
-  >([]);
+  const [giflist, setGiflist] = useState<Gif[]>([]);
   const [myKey, setMyKey] = useState<string | undefined>(undefined);
-  var windowWidht = Math.ceil(WWidht[0] / 500);
-
-  //debug undifined call param homepage taglist - search  - taglist
-
+  const navigate = useNavigate();
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       const entry = entries[0];
-      setMyElementIsVisible(entry.isIntersecting);
       if (entry.isIntersecting) {
+        setMyElementIsVisible(true);
         startTransition(() => {
           fetchGifs(
             taglist === undefined || taglist === null
@@ -50,14 +50,20 @@ export default function GifContainer({ taglist }: { taglist?: string[] }) {
   }, [taglist, startTransition]);
 
   const fetchGifs = async (url: string, searchstr?: string[]) => {
-    let tmp = {};
-    if (myKey != undefined) tmp["key"] = myKey;
-    if (searchstr != undefined) tmp["q"] = searchstr?.join("");
-    console.log(url);
-    const response = await fetch(url + "?" + new URLSearchParams(tmp));
-    const data = await response.json();
-    setGiflist((prevList) => [...prevList, ...data.gifs]);
-    setMyKey(data.key);
+    try {
+      const params: Record<string, string> = {};
+      if (myKey) params["key"] = myKey;
+      if (searchstr) params["q"] = searchstr.join(",");
+
+      console.log(params.key)
+      const response = await fetch(url + "?" + new URLSearchParams(params));
+      const data = await response.json();
+
+      setGiflist((prevList) => [...prevList, ...data.gifs]);
+      setMyKey(data.key);
+    } catch (error) {
+      console.error("Error fetching gifs:", error);
+    }
   };
 
   useEffect(() => {
@@ -76,23 +82,21 @@ export default function GifContainer({ taglist }: { taglist?: string[] }) {
   return (
     <Container>
       <Suspense fallback={<Spinner />}>
-        {giflist.map((x) => (
-          <ReallyScrewedUpSingleGif
-            imgsrc1={x.url}
-            singleId={x.id}
-            favourite1={x.favourite}
-            key={x.id}
-          />
-        ))}
+        <Row>
+          {giflist.map((gif) => (
+            <Col key={gif.id} xs={12} md={4}>
+              <ReallyScrewedUpSingleGif
+                imgsrc1={gif.url}
+                singleId={gif.id}
+                favourite1={gif.favourite}
+              />
+            </Col>
+          ))}
+        </Row>
       </Suspense>
+      <div ref={myRef} id="spinnispinner" className="d-flex justify-content-center">
+        {myElementIsVisible && <Spinner />}
+      </div>
     </Container>
   );
 }
-/*<div
-        ref={myRef}
-        id="spinnispinner"
-        className="d-flex justify-content-center"
-        style={{ visibility: myElementIsVisible ? "visible" : "hidden" }}
-      >
-        <Spinner />
-      </div>*/

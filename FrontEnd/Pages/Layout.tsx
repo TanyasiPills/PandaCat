@@ -1,15 +1,15 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import { Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import MyNavbar from "../Compoments/MyNavbar";
 
 export default function Layout() {
-  var str =
-    useLocation().pathname.replace("/", "").charAt(0).toUpperCase() +
-    useLocation().pathname.replace("/", "").slice(1);
+  const navigate = useNavigate();
   return (
     <Container>
-      <MyNavbar />
+      <MyNavbar onSearch={()=>{
+        navigate("/",{state:{clickedString: ""}})
+      }} />
       <Outlet />
     </Container>
   );

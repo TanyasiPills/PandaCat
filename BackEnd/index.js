@@ -117,7 +117,7 @@ app.post("/favourites", jsonParser, async (req, res) => {
   } else {
     let index = data.favourites.findIndex((e) => e.id == body.id);
     if (index == -1) {
-      data.favourites.push({ url: body.url, id: body.id });
+      data.favourites.push({ url: body.url, id: body.id});
       fs.writeFileSync(dir + "/data.json", JSON.stringify(data));
       console.log("favourites/add success: " + body.id);
     }

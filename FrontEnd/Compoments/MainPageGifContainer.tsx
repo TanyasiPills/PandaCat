@@ -12,8 +12,8 @@ import CannotLoadGifs from "./CannotLoadGifs";
 
 interface Props {
 	taglist?: string[];
-	weShallLoadMore? : boolean,
-	onlyFavourites?:boolean
+	weShallLoadMore?: boolean,
+	onlyFavourites?: boolean
 }
 
 
@@ -23,22 +23,23 @@ interface Gif {
 	favourite: boolean;
 }
 
-var lst : React.JSX.Element[][] = [];
-var oldData : Gif[] = [];
+var lst: React.JSX.Element[][] = [];
+var oldData: Gif[] = [];
 
-export default function GifContainer({ taglist, weShallLoadMore,onlyFavourites }: Props) {
+export default function GifContainer({ taglist, weShallLoadMore, onlyFavourites }: Props) {
 	const [isPending, startTransition] = useTransition();
 	const myRef = useRef<HTMLDivElement>(null);
 	const [myElementIsVisible, setMyElementIsVisible] = useState(false);
 	const [giflist, setGiflist] = useState<Gif[]>([]);
 	var myKey: string | undefined = undefined;
-	useEffect(() => {
+	
+	if (weShallLoadMore) useEffect(() => {
 		const observer = new IntersectionObserver((entries) => {
 			const entry = entries[0];
 			if (entry.isIntersecting) {
 				setMyElementIsVisible(true);
 				startTransition(() => {
-					fetchGifs(onlyFavourites==true?"http://localhost:3000/favourites":
+					fetchGifs(onlyFavourites == true ? "http://localhost:3000/favourites" :
 						taglist === undefined || taglist === null
 							? "http://localhost:3000/search"
 							: "http://localhost:3000/popular",
@@ -59,6 +60,21 @@ export default function GifContainer({ taglist, weShallLoadMore,onlyFavourites }
 		};
 	}, [taglist, startTransition]);
 
+	else useEffect(() => {
+		console.log("useEffect else");
+		setGiflist([]); // Clear giflist when taglist changes
+		myKey = undefined; // Reset key when taglist changes
+		startTransition(() => {
+		  fetchGifs(
+			onlyFavourites == true ? "http://localhost:3000/favourites" :
+						taglist === undefined || taglist === null
+							? "http://localhost:3000/search"
+							: "http://localhost:3000/popular",
+						taglist
+		  );
+		});
+	}, [taglist, startTransition]);
+
 	const fetchGifs = async (url: string, searchstr?: string[]) => {
 		try {
 			console.log("fetch");
@@ -68,28 +84,22 @@ export default function GifContainer({ taglist, weShallLoadMore,onlyFavourites }
 
 			const response = await fetch(url + "?" + new URLSearchParams(params));
 			const data = await response.json();
-			
-			setGiflist((prevList) => [...prevList, ...data.gifs]);
-			oldData = data.gifs;
-			myKey = data.key;
+
+			if (onlyFavourites) {
+				for (let i = 0; i < data.length; i++) data[i].favourite = true;
+				setGiflist((prevList) => [...prevList, ...data]);
+				oldData = data;
+				myKey = undefined;
+			}
+			else {
+				setGiflist((prevList) => [...prevList, ...data.gifs]);
+				oldData = data.gifs;
+				myKey = data.key;
+			}
 		} catch (error) {
 			console.error("Error fetching gifs:", error);
 		}
 	};
-	/*
-	  useEffect(() => {
-		setGiflist([]); // Clear giflist when taglist changes
-		setMyKey(undefined); // Reset key when taglist changes
-		startTransition(() => {
-		  fetchGifs(
-			taglist === undefined || taglist === null
-			  ? "http://localhost:3000/search"
-			  : "http://localhost:3000/popular",
-			taglist
-		  );
-		});
-	  }, [taglist, startTransition]);
-	*/
 
 	if (giflist.length != lst.map(e => e.length).reduce((a, b) => a + b, 0)) {
 		let columns = 4;
@@ -100,8 +110,8 @@ export default function GifContainer({ taglist, weShallLoadMore,onlyFavourites }
 			}
 		}
 
-		let prio = lst.map((y, i) => [i, document.getElementById("gifc_" + i)?.clientHeight!]).sort((a, b) => a[1] - b[1]); 
-		for (let i = 0; i < prio.length; i++) if (!prio[i][1]) prio[i][1] = 0; 
+		let prio = lst.map((y, i) => [i, document.getElementById("gifc_" + i)?.clientHeight!]).sort((a, b) => a[1] - b[1]);
+		for (let i = 0; i < prio.length; i++) if (!prio[i][1]) prio[i][1] = 0;
 
 		let max = Math.max(...prio.map(e => e[1]));
 		for (let i = 0; i < prio.length; i++) {
@@ -111,7 +121,7 @@ export default function GifContainer({ taglist, weShallLoadMore,onlyFavourites }
 		let index = 0;
 		for (let i = 0; i < prio.length; i++) {
 			for (let j = 0; j < prio[i][2]; j++) {
-				lst[prio[i][0]].push(<ReallyScrewedUpSingleGif key={oldData[j+index].id} imgsrc1={oldData[j+index].url} singleId={oldData[j+index].id} favourite1={oldData[j+index].favourite} />)
+				lst[prio[i][0]].push(<ReallyScrewedUpSingleGif key={oldData[j + index].id} imgsrc1={oldData[j + index].url} singleId={oldData[j + index].id} favourite1={oldData[j + index].favourite} />)
 			}
 			index += prio[i][2];
 		}
@@ -129,13 +139,13 @@ export default function GifContainer({ taglist, weShallLoadMore,onlyFavourites }
 		<Container>
 			<Suspense fallback={<Spinner />}>
 				<div className="gifrow">
-					{lst.length>0?
-					lst.map(e => <div className="gifcolumn" id={"gifc_" + lst.indexOf(e)} key={lst.indexOf(e)}>{e}</div>): <CannotLoadGifs/>}
+					{lst.length > 0 ?
+						lst.map(e => <div className="gifcolumn" id={"gifc_" + lst.indexOf(e)} key={lst.indexOf(e)}>{e}</div>) : <CannotLoadGifs />}
 				</div>
 			</Suspense>
-			{weShallLoadMore===undefined||weShallLoadMore=== true? <div ref={myRef} id="spinnispinner" className="d-flex justify-content-center">
-				{myElementIsVisible && <Spinner />}</div>: <></> }
-			
+			{weShallLoadMore === undefined || weShallLoadMore === true ? <div ref={myRef} id="spinnispinner" className="d-flex justify-content-center">
+				{myElementIsVisible && <Spinner />}</div> : <></>}
+
 		</Container>
 	)
 

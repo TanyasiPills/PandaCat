@@ -6,6 +6,8 @@ import Testmodule from "../Compoments/Testmodule";
 import MainPageGifContainer from "../Compoments/MainPageGifContainer";
 import TagList from "../Compoments/TagList";
 import { useLocation } from "react-router-dom";
+import VantaFog from "../VantaFog";
+import "../Pages/CSS/Container.css"
 
 interface Props {
   predefTagList?: string[];
@@ -13,6 +15,15 @@ interface Props {
 
 export default function Home({ predefTagList }: Props) {
   const [gtaglist, setArrayOfTags] = useState<string[]>(predefTagList || []);
+  const location = useLocation();
+  const navigatorparams = location.state?.clickedString;
+
+  // Update gtaglist when navigatorparams changes
+  useEffect(() => {
+    if (navigatorparams && navigatorparams.length > 0 && gtaglist.length === 0) {
+      setArrayOfTags([navigatorparams]);
+    }
+  }, [navigatorparams]);
 
   const thisFromChildComponent = (value: string[]) => {
     if (JSON.stringify(gtaglist) !== JSON.stringify(value)) {
@@ -24,21 +35,14 @@ export default function Home({ predefTagList }: Props) {
     setArrayOfTags((prevList) => [...prevList, searchQuery]);
   };
 
-  // Check if there are predefined tags or if tags are provided via location state
-  const location = useLocation();
-  const navigatorparams = location.state?.taglist;
-  if (navigatorparams && navigatorparams.length > 0 && gtaglist.length === 0) {
-    setArrayOfTags(navigatorparams);
-  }
-
   return (
     <Container>
+      <VantaFog/>
       <MyNavbar onSearch={MySearch} />
-      <div className="ActiveTags" style={{ backgroundColor: "#aaa", height: "5vh" }}>
+      <div className="ActiveTags" style={{ backgroundColor: "#aaa", height: "5vh", marginTop: "8vh" }}>
         {gtaglist.length > 0 && <TagList taglist={gtaglist} removable={true} callback={thisFromChildComponent} />}
       </div>
-      <Testmodule />
-      <div className="gifs" style={{ minHeight: "100vh" }}>
+      <div className="gifs maincontainer" style={{ minHeight: "100vh" }}>
         <MainPageGifContainer taglist={gtaglist} />
       </div>
     </Container>

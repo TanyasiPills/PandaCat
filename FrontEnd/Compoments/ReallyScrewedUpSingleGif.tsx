@@ -24,69 +24,71 @@ export default function ReallyScrewedUpSingleGif({
 
   const navigator = useNavigate();
   return (
-    <div className="gifcontainer card ">
-      <Image fluid className="gifem" src={imgsrc1} alt="Can't load the gif"  onClick={() => navigator(`/gif/${singleId}`)}/>
-      {favourite1 ? (
-        <Image
-          onClick={() => {
-            setItFav(() => (IsItFav ? false : true));
-            {
-              if (!IsItFav) {
-                fetch("http://localhost:3000" + "/favourites", {
-                  method: "POST",
-                  headers: {"Content-Type":"application/json"},
-                  body: JSON.stringify({
-                    url: imgsrc1,
-                    id: singleId,
-                  }),
-                });
-              } else {
-                fetch("http://localhost:3000" + "/favourites", {
-                  method: "DELETE",
-                  headers: {"Content-Type":"application/json"},
-                  body: JSON.stringify({
-                    id: singleId,
-                  }),
-                });
+    <>
+      <div className="gifcontainer card ">
+        <Image fluid className="gifem" src={imgsrc1} alt="Can't load the gif" onClick={() => navigator(`/gif/${singleId}`)} />
+        {favourite1 ? (
+          <Image
+            onClick={() => {
+              setItFav(() => (IsItFav ? false : true));
+              {
+                if (!IsItFav) {
+                  fetch("http://localhost:3000" + "/favourites", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      url: imgsrc1,
+                      id: singleId,
+                    }),
+                  });
+                } else {
+                  fetch("http://localhost:3000" + "/favourites", {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      id: singleId,
+                    }),
+                  });
+                }
               }
-            }
-          }}
-          fluid
-          className="plus-image heart"
-          src={IsItFav ? solidheart : heart}
-          alt="Can't be loaded"
-        />
-      ) : (
-        <Image
-          onClick={() => {
-            setItFav(() => (IsItFav ? false : true));
-            {
-              if (!IsItFav) {
-                fetch("http://localhost:3000" + "/favourites", {
-                  method: "POST",
-                  headers: {"Content-Type":"application/json"},
-                  body: JSON.stringify({
-                    url: imgsrc1,
-                    id: singleId,
-                  }),
-                });
-              } else {
-                fetch("http://localhost:3000" + "/favourites", {
-                  method: "DELETE",
-                  headers: {"Content-Type":"application/json"},
-                  body: JSON.stringify({
-                    id: singleId,
-                  }),
-                });
+            }}
+            fluid
+            className="plus-image heart"
+            src={IsItFav ? solidheart : heart}
+            alt="Can't be loaded"
+          />
+        ) : (
+          <Image
+            onClick={() => {
+              setItFav(() => (IsItFav ? false : true));
+              {
+                if (!IsItFav) {
+                  fetch("http://localhost:3000" + "/favourites", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      url: imgsrc1,
+                      id: singleId,
+                    }),
+                  });
+                } else {
+                  fetch("http://localhost:3000" + "/favourites", {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      id: singleId,
+                    }),
+                  });
+                }
               }
-            }
-          }}
-          className="plus-image heart"
-          fluid
-          src={IsItFav ? solidheart : heart}
-          alt="Can't be loaded"
-        />
-      )}
-    </div>
+            }}
+            className="plus-image heart"
+            fluid
+            src={IsItFav ? solidheart : heart}
+            alt="Can't be loaded"
+          />
+        )}
+      </div>
+    </>
   );
 }

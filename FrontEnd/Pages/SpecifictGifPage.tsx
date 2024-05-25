@@ -4,7 +4,8 @@ import { Container } from "react-bootstrap";
 import { Navigate, useNavigate } from "react-router-dom";
 import Gif from "../Compoments/Gif";
 import TagList from "../Compoments/TagList";
-import "../Pages/CSS/SpecifictGifPage.css";
+import VantaFog from "../VantaFog";
+import "../Pages/CSS/Container.css"
 
 interface SpecificGifProps {
   gifsrc?: string;
@@ -98,7 +99,9 @@ export default function SpecificGif({
   }
 
   return (
-    <Container style={{backgroundColor:	"rgb(224,224,224)", paddingTop: "2vh", paddingBottom: "2vh"}}>
+    <>
+    <VantaFog/>
+    <Container className="maincontainer">
       <div style={{paddingLeft:"15vw", paddingRight: "15vw", paddingBottom: "2vh"}}>
       <Gif
         basesrc={gifData.url || ""}
@@ -113,5 +116,6 @@ export default function SpecificGif({
       />
       </div>
     </Container>
+    </>
   );
 }

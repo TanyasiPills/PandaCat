@@ -1,7 +1,7 @@
 .shareicon {
-  max-width: 10%;
-  max-height: 10%;
   float: inline-end;
+  position: relative;
+  display: inline-block;
 }
 
 @keyframes heartbeat {

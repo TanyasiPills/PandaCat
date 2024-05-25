@@ -51,10 +51,13 @@ export default function MyNavbar({ onSearch }) {
           </Form>
           <Nav className="hoveringelunk justify-content-end flex-grow-1 pe-3">
             <motion.div whileHover={{ scale: [null, 1.5, 1.4] }}
-              transition={{ duration: 0.3 }}>
+              transition={{ duration: 0.3 }} style={{paddingLeft: "0.5vw", paddingRight:"0.5vw"}}>
               <Nav.Link href="/" >Home</Nav.Link></motion.div>
+              <motion.div whileHover={{ scale: [null, 1.5, 1.4] }}
+              transition={{ duration: 0.3 }} style={{paddingLeft: "0.5vw", paddingRight:"0.5vw"}}>
+              <Nav.Link href="/favourites">Favourites</Nav.Link></motion.div>
             <motion.div whileHover={{ scale: [null, 1.5, 1.4] }}
-              transition={{ duration: 0.3 }}>
+              transition={{ duration: 0.3 }} style={{paddingLeft: "0.5vw", paddingRight:"0.5vw"}}>
               <Nav.Link href="/contact">Contact</Nav.Link></motion.div>
           </Nav>
         </Container>

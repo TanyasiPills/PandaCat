@@ -1,0 +1,8 @@
+.maincontainer {
+    min-height:85vh;
+    margin-bottom: 5vh;
+    margin-top: 10vh;
+    background-color: rgb(224,224,224, 0.4);
+    padding-top: 2vh ;
+    padding-bottom: 2vh ;
+}

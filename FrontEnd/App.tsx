@@ -1,13 +1,15 @@
-import React from "react";
-import Routeing from "./Compoments/Routeing";
+// App.js
+import React from 'react';
+import Routeing from './Compoments/Routeing';
+import VantaFog from './VantaFog';
 
-function App() {
+const App = () => {
   return (
     <>
-      
       <Routeing />
+      {/* Other components can go here */}
     </>
   );
-}
+};
 
 export default App;

@@ -6,9 +6,16 @@ import React, {
 	Suspense,
 } from "react";
 import ReallyScrewedUpSingleGif from "./ReallyScrewedUpSingleGif";
-import { Col, Container, Row, Spinner } from "react-bootstrap";
-import { UNSAFE_DataRouterContext } from "react-router-dom";
+import { Col, Container, Row, Spinner, Image } from "react-bootstrap";
 import "./CSS/MainPageGifContainer.css";
+import CannotLoadGifs from "./CannotLoadGifs";
+
+interface Props {
+	taglist?: string[];
+	weShallLoadMore? : boolean,
+	onlyFavourites?:boolean
+}
+
 
 interface Gif {
 	url: string;
@@ -19,7 +26,7 @@ interface Gif {
 var lst : React.JSX.Element[][] = [];
 var oldData : Gif[] = [];
 
-export default function GifContainer({ taglist }: { taglist?: string[] }) {
+export default function GifContainer({ taglist, weShallLoadMore,onlyFavourites }: Props) {
 	const [isPending, startTransition] = useTransition();
 	const myRef = useRef<HTMLDivElement>(null);
 	const [myElementIsVisible, setMyElementIsVisible] = useState(false);
@@ -31,7 +38,7 @@ export default function GifContainer({ taglist }: { taglist?: string[] }) {
 			if (entry.isIntersecting) {
 				setMyElementIsVisible(true);
 				startTransition(() => {
-					fetchGifs(
+					fetchGifs(onlyFavourites==true?"http://localhost:3000/favourites":
 						taglist === undefined || taglist === null
 							? "http://localhost:3000/search"
 							: "http://localhost:3000/popular",
@@ -54,6 +61,7 @@ export default function GifContainer({ taglist }: { taglist?: string[] }) {
 
 	const fetchGifs = async (url: string, searchstr?: string[]) => {
 		try {
+			console.log("fetch");
 			const params: Record<string, string> = {};
 			if (myKey) params["key"] = myKey;
 			if (searchstr) params["q"] = searchstr.join(",");
@@ -121,12 +129,13 @@ export default function GifContainer({ taglist }: { taglist?: string[] }) {
 		<Container>
 			<Suspense fallback={<Spinner />}>
 				<div className="gifrow">
-					{lst.map(e => <div className="gifcolumn" id={"gifc_" + lst.indexOf(e)} key={lst.indexOf(e)}>{e}</div>)}
+					{lst.length>0?
+					lst.map(e => <div className="gifcolumn" id={"gifc_" + lst.indexOf(e)} key={lst.indexOf(e)}>{e}</div>): <CannotLoadGifs/>}
 				</div>
 			</Suspense>
-			<div ref={myRef} id="spinnispinner" className="d-flex justify-content-center">
-				{myElementIsVisible && <Spinner />}
-			</div>
+			{weShallLoadMore===undefined||weShallLoadMore=== true? <div ref={myRef} id="spinnispinner" className="d-flex justify-content-center">
+				{myElementIsVisible && <Spinner />}</div>: <></> }
+			
 		</Container>
 	)
 

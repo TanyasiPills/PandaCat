@@ -20,24 +20,14 @@ interface Props {
   bid: string;
 }
 
-
-function Akarmi({
-  basesrc,
-  favourite,
-  bid,
-}: 
-  Props
-) {
+function Gif({ basesrc, favourite, bid }: Props) {
   const [imgsrc, setImgSrc] = useState(basesrc);
-  console.log("Gif.tsx|"+bid);
-  const handleImgSrc = async (paramImg: string) => {
-    var newImgSrc;
-    await fetch(`http://localhost:3000/gif/${bid}?`+new URLSearchParams(paramImg), {
+  const handleImgSrc = async (quality: string) => {
+    const response = await fetch(`http://localhost:3000/gif/${bid}?quality=${quality}`, {
       method: "GET",
-    })
-      .then((x) => x.json())
-      .then((x) => (newImgSrc = x.url));
-    setImgSrc(newImgSrc);
+    });
+    const data = await response.json();
+    setImgSrc(data.url);
   };
 
   return (
@@ -55,58 +45,50 @@ function Akarmi({
         </Row>
         <Row
           className="sharegif"
-          style={{ display: "flex", justifyContent: "flex-end" , paddingTop:"2vh"}}
+          style={{ display: "flex", justifyContent: "flex-end", paddingTop: "2vh" }}
         >
-          <ButtonToolbar>
-            <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
-              <ToggleButton
-                value={1}
-                id={"hd"}
-                onChange={() => handleImgSrc("1")}
-                checked={false}
-              >
-                HD Gif
-              </ToggleButton>
-              <ToggleButton
-                value={2}
-                id={"sd"}
-                onChange={() => handleImgSrc("2")}
-                checked 
-              >
-                SD Gif 2
-              </ToggleButton>
-              <ToggleButton
-                value={3}
-                id={"mp"}
-                onChange={() => handleImgSrc("3")}
-              >
-                MP4
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </ButtonToolbar>
-          <Image
-            src={copy}
-            className="shareicon"
-            alt="link icon"
-            data-clipboard-text={imgsrc}
-          />
+          <Col xs={8}> {/* Adjust the column size */}
+            <ButtonToolbar>
+              <ToggleButtonGroup type="radio" name="options" defaultValue={2} style={{textAlign: "center"}}>
+                <ToggleButton value={1} id="hd" onClick={() => handleImgSrc("hd")}>
+                  HD Gif
+                </ToggleButton>
+                <ToggleButton value={2} id="sd" onClick={() => handleImgSrc("sd")}>
+                  SD Gif
+                </ToggleButton>
+                <ToggleButton value={3} id="mp4" onClick={() => handleImgSrc("mp4")}>
+                  MP4
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </ButtonToolbar>
+          </Col>
+          <Col>
+            <Image
+              src={copy}
+              className="shareicon"
+              alt="link icon"
+              data-clipboard-text={imgsrc}
+              style={{ maxWidth: "100%" }}
+            />
+          </Col>
         </Row>
         <Row>
-          <h5>Share link</h5>
-          <Form.Control
-            type="text"
-            placeholder="Disabled readonly input"
-            value={window.location.href}
-            aria-label={window.location.href}
-            onClick={() => {
-              navigator.clipboard.writeText(window.location.href);
-            }}
-            readOnly
-          />
+          <Col>
+            <h5>Share link</h5>
+            <Form.Control
+              type="text"
+              value={window.location.href}
+              aria-label={window.location.href}
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href);
+              }}
+              readOnly
+            />
+          </Col>
         </Row>
       </Col>
     </Container>
   );
 }
 
-export default Akarmi;
+export default Gif;

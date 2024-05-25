@@ -1,6 +1,5 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Favourite from "../Pages/Favourites";
 import Layout from "../Pages/Layout";
 import PageNotFound from "../Pages/PageNotFound";
 import StillLoadingPage from "../Pages/StillLoadingPage";
@@ -9,6 +8,7 @@ import StillLoadingPage from "../Pages/StillLoadingPage";
 const Home = lazy(() => import("../Pages/Home"));
 const Contact = lazy(() => import("../Pages/Contact"));
 const SpecifictGifPage = lazy(() => import("../Pages/SpecifictGifPage"));
+const Favourite= lazy(() => import("../Pages/Favourites"));
 
 export default function Routeing() {
   return (

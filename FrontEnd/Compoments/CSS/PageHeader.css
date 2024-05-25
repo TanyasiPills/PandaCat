@@ -1,9 +1,9 @@
 .myheader {
     font-size: auto;
     color: #fff;
-    -webkit-animation: glow 1s ease-in-out infinite alternate;
-    -moz-animation: glow 1s ease-in-out infinite alternate;
-    animation: glow 1s ease-in-out infinite alternate;
+    -webkit-animation: myheader 1s ease-in-out infinite alternate;
+    -moz-animation: myheader 1s ease-in-out infinite alternate;
+    animation: myheader 1s ease-in-out infinite alternate;
 }
 
 @-webkit-keyframes myheader {

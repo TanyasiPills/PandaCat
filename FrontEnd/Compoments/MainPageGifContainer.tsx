@@ -33,7 +33,7 @@ export default function GifContainer({ taglist, weShallLoadMore, onlyFavourites 
 	const [giflist, setGiflist] = useState<Gif[]>([]);
 	var myKey: string | undefined = undefined;
 	
-	if (weShallLoadMore) useEffect(() => {
+	if (weShallLoadMore || weShallLoadMore === undefined) useEffect(() => {
 		const observer = new IntersectionObserver((entries) => {
 			const entry = entries[0];
 			if (entry.isIntersecting) {

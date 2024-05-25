@@ -43,7 +43,7 @@ export default function Home({ predefTagList }: Props) {
         {gtaglist.length > 0 && <TagList taglist={gtaglist} removable={true} callback={thisFromChildComponent} />}
       </div>
       <div className="gifs maincontainer" style={{ minHeight: "100vh" }}>
-        <MainPageGifContainer taglist={gtaglist} />
+        <MainPageGifContainer taglist={gtaglist}/>
       </div>
     </Container>
   );

@@ -17,7 +17,7 @@ function SadPanda() {
                     <PageHeader text="It's looks like we can't load any gifs here" />
                 </Col>
                 <Col>
-                    <Image src={sadPanda} aria-label="SadPanda" alt="Can't load sad panda gif :sob:" />
+                    <Image fluid src={sadPanda} aria-label="SadPanda" alt="Can't load sad panda gif :sob:" />
                 </Col>
             </Row>
         </div>

@@ -13,12 +13,14 @@ interface Props {
   imgsrc1: string;
   singleId: string;
   favourite1: boolean;
+  myCallbackFunc: (value: string) => void;
 }
 
 export default function ReallyScrewedUpSingleGif({
   imgsrc1,
   singleId,
   favourite1,
+  myCallbackFunc
 }: Props) {
   const [IsItFav, setItFav] = useState(favourite1);
 
@@ -49,6 +51,7 @@ export default function ReallyScrewedUpSingleGif({
                       id: singleId,
                     }),
                   });
+                  myCallbackFunc(singleId);
                 }
               }
             }}

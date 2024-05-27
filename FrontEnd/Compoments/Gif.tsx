@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+//@ts-nocheck
+import React, { useEffect, useRef, useState } from "react";
 import {
   ButtonToolbar,
   Col,
@@ -13,6 +14,8 @@ import PageHeader from "./PageHeader";
 import copy from "../../public/copy_link.png";
 import "./CSS/Gif.css";
 import ReallyScrewedUpSingleGif from "../Compoments/ReallyScrewedUpSingleGif";
+import "../Compoments/CSS/CopyArea.css"
+import { Link, Navigate } from "react-router-dom";
 
 interface Props {
   basesrc: string;
@@ -22,6 +25,7 @@ interface Props {
 
 function Gif({ basesrc, favourite, bid }: Props) {
   const [imgsrc, setImgSrc] = useState(basesrc);
+
   const handleImgSrc = async (quality: string) => {
     const response = await fetch(`http://localhost:3000/gif/${bid}?quality=${quality}`, {
       method: "GET",
@@ -30,8 +34,22 @@ function Gif({ basesrc, favourite, bid }: Props) {
     setImgSrc(data.url);
   };
 
+  const copyArea = useRef<HTMLSpanElement>(null);
+
+  function CopiedText(event: React.MouseEvent<HTMLImageElement | HTMLInputElement, MouseEvent>) {
+    const sp = copyArea.current!;
+    sp.className = "show";
+    sp.style.left = event.clientX + "px";
+    sp.style.top = event.clientY + "px";
+
+    setTimeout(() => {
+      sp.className = sp.className.replace("show", "");
+    }, 3000);
+  }
+
   return (
     <Container>
+      <span id="snackbar" ref={copyArea}>Successfully Copied</span>
       <Col>
         <Row>
           <PageHeader text="Gif" />
@@ -41,15 +59,16 @@ function Gif({ basesrc, favourite, bid }: Props) {
             imgsrc1={imgsrc}
             favourite1={favourite}
             singleId={bid}
+            myCallbackFunc={() => { }}
           />
         </Row>
         <Row
           className="sharegif"
           style={{ display: "flex", justifyContent: "flex-end", paddingTop: "2vh" }}
         >
-          <Col xs={8}> {/* Adjust the column size */}
+          <Col xs={8}>
             <ButtonToolbar>
-              <ToggleButtonGroup type="radio" name="options" defaultValue={2} style={{textAlign: "center"}}>
+              <ToggleButtonGroup type="radio" name="options" defaultValue={2} style={{ textAlign: "center" }}>
                 <ToggleButton value={1} id="hd" onClick={() => handleImgSrc("hd")}>
                   HD Gif
                 </ToggleButton>
@@ -69,6 +88,7 @@ function Gif({ basesrc, favourite, bid }: Props) {
               alt="link icon"
               data-clipboard-text={imgsrc}
               style={{ maxWidth: "100%" }}
+              onClick={(e) => CopiedText(e)}
             />
           </Col>
         </Row>
@@ -79,14 +99,24 @@ function Gif({ basesrc, favourite, bid }: Props) {
               type="text"
               value={window.location.href}
               aria-label={window.location.href}
-              onClick={() => {
-                navigator.clipboard.writeText(window.location.href);
-              }}
+              data-clipboard-text={window.location.href}
+              onClick={(e) => CopiedText(e)}
               readOnly
             />
           </Col>
         </Row>
       </Col>
+      <Row>
+        <h5>Original Source:</h5>
+        <Image
+          style={{ maxHeight: "10vh", display: "block", width: "auto", height: "auto" }}
+          fluid
+          src="../public/TenorLogo.png"
+          onClick={() => window.open(`https://tenor.com/hu/view/${bid}`, '_blank')}
+          alt="Tenor source"
+          aria-label="Tenor src"
+        />
+      </Row>
     </Container>
   );
 }

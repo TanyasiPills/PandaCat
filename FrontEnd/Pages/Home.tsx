@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.css";
 import { Container, Spinner } from "react-bootstrap";
 import MyNavbar from "../Compoments/MyNavbar";
-import Testmodule from "../Compoments/Testmodule";
 import MainPageGifContainer from "../Compoments/MainPageGifContainer";
 import TagList from "../Compoments/TagList";
 import { useLocation } from "react-router-dom";
@@ -27,12 +26,12 @@ export default function Home({ predefTagList }: Props) {
 
   const thisFromChildComponent = (value: string[]) => {
     if (JSON.stringify(gtaglist) !== JSON.stringify(value)) {
-      setArrayOfTags((prevList) => [...prevList, ...value]);
+      setArrayOfTags(() => [...value].filter((x,i)=> [...value].indexOf(x)===i));
     }
   };
 
   const MySearch = (searchQuery: string) => {
-    setArrayOfTags((prevList) => [...prevList, searchQuery]);
+    setArrayOfTags((prevList) => [...prevList, searchQuery].filter((x,i)=> [...prevList, searchQuery].indexOf(x)===i));
   };
 
   return (

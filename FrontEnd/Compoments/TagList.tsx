@@ -31,7 +31,7 @@ const TagList: React.FC<TagListProps> = ({
 
   
   return (
-    <div className="btn-group">
+    <div className="btn-group" style={{borderRadius: "0.5%"}}>
       {tags.map((x, i) => (
         <div className="btn-group" key={i}>
           {removable ? (

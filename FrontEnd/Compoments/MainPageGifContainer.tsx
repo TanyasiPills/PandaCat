@@ -10,6 +10,7 @@ import { Col, Container, Row, Spinner, Image } from "react-bootstrap";
 import "./CSS/MainPageGifContainer.css";
 import CannotLoadGifs from "./CannotLoadGifs";
 
+const beckendLocation = import.meta.env.backend_Url;
 interface Props {
 	taglist?: string[];
 	weShallLoadMore?: boolean,
@@ -33,6 +34,19 @@ export default function GifContainer({ taglist, weShallLoadMore, onlyFavourites 
 	const [giflist, setGiflist] = useState<Gif[]>([]);
 	var myKey: string | undefined = undefined;
 	
+	console.log({beckendLocation});
+
+	const CamingFromChild =(value: string)=> {
+		setGiflist((previous)=> [...previous].filter(x=> x.id != value));
+		for (let index = 0; index < lst.length; index++) {
+			for (let index1 = 0; index1 < lst[index].length; index1++) {
+				if(lst[index][index1].props.singleId == value){
+					lst[index].splice(index1,1);
+				}
+			}			
+		}
+	}
+
 	if (weShallLoadMore || weShallLoadMore === undefined) useEffect(() => {
 		const observer = new IntersectionObserver((entries) => {
 			const entry = entries[0];
@@ -61,7 +75,6 @@ export default function GifContainer({ taglist, weShallLoadMore, onlyFavourites 
 	}, [taglist, startTransition]);
 
 	else useEffect(() => {
-		console.log("useEffect else");
 		setGiflist([]); // Clear giflist when taglist changes
 		myKey = undefined; // Reset key when taglist changes
 		startTransition(() => {
@@ -77,7 +90,6 @@ export default function GifContainer({ taglist, weShallLoadMore, onlyFavourites 
 
 	const fetchGifs = async (url: string, searchstr?: string[]) => {
 		try {
-			console.log("fetch");
 			const params: Record<string, string> = {};
 			if (myKey) params["key"] = myKey;
 			if (searchstr) params["q"] = searchstr.join(",");
@@ -97,7 +109,7 @@ export default function GifContainer({ taglist, weShallLoadMore, onlyFavourites 
 				myKey = data.key;
 			}
 		} catch (error) {
-			console.error("Error fetching gifs:", error);
+			//console.error("Error fetching gifs:", error);
 		}
 	};
 
@@ -121,7 +133,7 @@ export default function GifContainer({ taglist, weShallLoadMore, onlyFavourites 
 		let index = 0;
 		for (let i = 0; i < prio.length; i++) {
 			for (let j = 0; j < prio[i][2]; j++) {
-				lst[prio[i][0]].push(<ReallyScrewedUpSingleGif key={oldData[j + index].id} imgsrc1={oldData[j + index].url} singleId={oldData[j + index].id} favourite1={oldData[j + index].favourite} />)
+				lst[prio[i][0]].push(<ReallyScrewedUpSingleGif myCallbackFunc={CamingFromChild} key={oldData[j + index].id} imgsrc1={oldData[j + index].url} singleId={oldData[j + index].id} favourite1={oldData[j + index].favourite} />)
 			}
 			index += prio[i][2];
 		}
@@ -129,7 +141,7 @@ export default function GifContainer({ taglist, weShallLoadMore, onlyFavourites 
 		let prioIndex = 0;
 		while (index < oldData.length) {
 			if (prioIndex == prio.length) prioIndex = 0;
-			lst[prio[prioIndex][0]].push(<ReallyScrewedUpSingleGif key={oldData[index].id} imgsrc1={oldData[index].url} singleId={oldData[index].id} favourite1={oldData[index].favourite} />);
+			lst[prio[prioIndex][0]].push(<ReallyScrewedUpSingleGif myCallbackFunc={CamingFromChild} key={oldData[index].id} imgsrc1={oldData[index].url} singleId={oldData[index].id} favourite1={oldData[index].favourite} />);
 			index++;
 			prioIndex++;
 		}

@@ -12,13 +12,13 @@ export default class Contact extends React.Component {
   render(): React.ReactNode {
     return (
       <>
-        <VantaFog/>
+        <VantaFog />
         <Container className="maincontainer">
-          <Row style={{textAlign: "center", marginTop: "2vh",marginBottom: "4vh"}}>
-            <PageHeader text="Contact"/>
+          <Row style={{ textAlign: "center", marginTop: "2vh", marginBottom: "4vh" }}>
+            <PageHeader text="Contact" />
           </Row>
           <Row>
-            <Col style={{marginRight:"2vh", marginLeft:"2vh"}}>
+            <Col style={{ marginRight: "2vh", marginLeft: "2vh" }}>
               <motion.div
 
                 initial={{
@@ -44,10 +44,26 @@ export default class Contact extends React.Component {
                 </p>
               </motion.div>
             </Col>
-            <Col style={{marginRight: "2vh"}}>
-              <div className="rightimg">
-                <Image fluid src="../public/Tenor_home_page.png" alt="Tenor homepage" />
-              </div>
+            <Col style={{ marginRight: "2vh" }}>
+              <motion.div
+
+                initial={{
+                  opacity: 0,
+                  y: -50,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    duration: 1,
+                  },
+                }}
+                viewport={{ once: true }}
+              >
+                <div className="rightimg">
+                  <Image fluid src="../public/Tenor_home_page.png" alt="Tenor homepage" />
+                </div>
+              </motion.div>
             </Col>
           </Row>
         </Container>

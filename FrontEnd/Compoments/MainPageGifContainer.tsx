@@ -6,7 +6,7 @@ import React, {
 	Suspense,
 } from "react";
 import ReallyScrewedUpSingleGif from "./ReallyScrewedUpSingleGif";
-import { Col, Container, Row, Spinner, Image } from "react-bootstrap";
+import { Col, Container,  Spinner } from "react-bootstrap";
 import "./CSS/MainPageGifContainer.css";
 import CannotLoadGifs from "./CannotLoadGifs";
 
@@ -54,9 +54,9 @@ export default function GifContainer({ taglist, weShallLoadMore, onlyFavourites 
 				setMyElementIsVisible(true);
 				startTransition(() => {
 					fetchGifs(onlyFavourites == true ? "http://localhost:3000/favourites" :
-						taglist === undefined || taglist === null
-							? "http://localhost:3000/search"
-							: "http://localhost:3000/popular",
+						taglist === undefined || taglist.length<1
+							? "http://localhost:3000/popular"
+							: "http://localhost:3000/search",
 						taglist
 					);
 				});
@@ -80,9 +80,9 @@ export default function GifContainer({ taglist, weShallLoadMore, onlyFavourites 
 		startTransition(() => {
 		  fetchGifs(
 			onlyFavourites == true ? "http://localhost:3000/favourites" :
-						taglist === undefined || taglist === null
-							? "http://localhost:3000/search"
-							: "http://localhost:3000/popular",
+						taglist === undefined || taglist.length<1
+							? "http://localhost:3000/popular"
+							: "http://localhost:3000/search",
 						taglist
 		  );
 		});
@@ -160,27 +160,4 @@ export default function GifContainer({ taglist, weShallLoadMore, onlyFavourites 
 
 		</Container>
 	)
-
-
-	/*return (
-	  <Container>
-		<Suspense fallback={<Spinner />}>
-		  <Row>
-			{giflist.map((gif) => (
-			  <Col key={gif.id} xs={12} md={4}>
-				<ReallyScrewedUpSingleGif
-				  imgsrc1={gif.url}
-				  singleId={gif.id}
-				  favourite1={gif.favourite}
-				/>
-			  </Col>
-			))}
-		  </Row>
-		</Suspense>
-		<div ref={myRef} id="spinnispinner" className="d-flex justify-content-center">
-		  {myElementIsVisible && <Spinner />}
-		</div>
-	  </Container>
-	);
-	*/
 }

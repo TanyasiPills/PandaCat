@@ -13,10 +13,19 @@ Run the following commands:
 - `cd .\PandaCat\`
 - `npm i`
 - `npm run dev`
+From a new terminal:
+- `cd .\PandaCat\`
+- `npm run back`
 
 Now you can open this website on the following URL: `http://localhost:5173/`
 
-##License
+## Known Issues:
+- `Redirection sometimes sucks`
+- `Gif container not updates whenever taglist changes`
+- `Styleing`
+
+
+## License
 If you dare to use ANY part of OUR code we gona tranc you down, find you and share all of our happiness bc we had no hope that anyone find it useful. Thanks for downloading. (P.S. sr for setting the license one of my groupmate set it to MIT and I don't have the permission to change it :D
 
 ## League of Inters
@@ -43,3 +52,4 @@ We created our company aiming to be the best of the best in emerald, and 'till t
 - incest player(Alabama user)
 - Reddit fan
 - Nutella
+<p align="right">(<a href="#readme-top">back to top</a>)</p>

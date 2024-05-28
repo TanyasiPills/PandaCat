@@ -113,6 +113,17 @@ export default function GifContainer({ taglist, weShallLoadMore, onlyFavourites 
 		}
 	};
 
+	useEffect(() => {
+		setGiflist([]);
+		lst = [];
+		fetchGifs(onlyFavourites == true ? "http://localhost:3000/favourites" :
+		taglist === undefined || taglist.length<1
+			? "http://localhost:3000/popular"
+			: "http://localhost:3000/search",
+		taglist
+		);
+	}, [taglist]);
+
 	if (giflist.length != lst.map(e => e.length).reduce((a, b) => a + b, 0)) {
 		let columns = 4;
 

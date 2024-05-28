@@ -37,14 +37,14 @@ export default function GifContainer({ taglist, weShallLoadMore, onlyFavourites 
 	console.log({beckendLocation});
 
 	const CamingFromChild =(value: string)=> {
-		setGiflist((previous)=> [...previous].filter(x=> x.id != value));
-		for (let index = 0; index < lst.length; index++) {
-			for (let index1 = 0; index1 < lst[index].length; index1++) {
-				if(lst[index][index1].props.singleId == value){
-					lst[index].splice(index1,1);
-				}
-			}			
-		}
+		setGiflist([]);
+		lst = [];
+		fetchGifs(onlyFavourites == true ? "http://localhost:3000/favourites" :
+		taglist === undefined || taglist.length<1
+			? "http://localhost:3000/popular"
+			: "http://localhost:3000/search",
+		taglist
+		);
 	}
 
 	if (weShallLoadMore || weShallLoadMore === undefined) useEffect(() => {
@@ -114,14 +114,16 @@ export default function GifContainer({ taglist, weShallLoadMore, onlyFavourites 
 	};
 
 	useEffect(() => {
-		setGiflist([]);
-		lst = [];
-		fetchGifs(onlyFavourites == true ? "http://localhost:3000/favourites" :
-		taglist === undefined || taglist.length<1
-			? "http://localhost:3000/popular"
-			: "http://localhost:3000/search",
-		taglist
-		);
+		if (taglist) {
+			setGiflist([]);
+			lst = [];
+			fetchGifs(onlyFavourites == true ? "http://localhost:3000/favourites" :
+			taglist === undefined || taglist.length<1
+				? "http://localhost:3000/popular"
+				: "http://localhost:3000/search",
+			taglist
+			);
+		}
 	}, [taglist]);
 
 	if (giflist.length != lst.map(e => e.length).reduce((a, b) => a + b, 0)) {

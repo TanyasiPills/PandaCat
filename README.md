@@ -20,26 +20,4 @@ Now you can open this website on the following URL: `http://localhost:5173/`
 If you dare to use ANY part of OUR code we gona tranc you down, find you and share all of our happiness bc we had no hope that anyone find it useful. Thanks for downloading. (P.S. sr for setting the license one of my groupmate set it to MIT and I don't have the permission to change it :D
 
 ## League of Inters
-We created our company aiming to be the best of the best in emerald, and 'till this day, we're still passionate about our goals. PP
-
-### Crew
-###### Gáspi Matyeszkó:
-- discord moderator since 2021
-- hardstuck sliver palyer in league	
-- taiko fan -> kid enjoyer
-- yone botlane dps build main
-- goth humper
-
-###### Rábi Benci:
-- catcopium.gif
-- sokkat cappelek
-- at least has 3 pp
-- yuumi mid main
-- hardstuck top 1 challenger in league
-###### Szilva Kriszi:
-
-- happy solo support(disappointment)
-- loli enjoyer
-- incest player(Alabama user)
-- Reddit fan
-- Nutella
+We created our company aiming to be the best of the best in emerald, and 'till this day, we're still passionate about our goals.

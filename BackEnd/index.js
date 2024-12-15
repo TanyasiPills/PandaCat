@@ -3,7 +3,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import data from "./data.json" assert { type: "json" };
 import fs from "fs";
-import { grab_data } from "../Stealing/steal.js";
+import { grab_data } from "./steal.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
